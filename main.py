@@ -32,6 +32,7 @@ class Person:
     """
     person class that represents a person in a pandemic
     """
+
     def __init__(self):
         self.x = np.random.randint(0, WIDTH)
         self.y = np.random.randint(0, HEIGHT)
@@ -114,6 +115,7 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int):
                 vertex1.infected = True
 
 
+'''
 def infect(threshold, p1, p2):
     """
     Infects people within a certain distance threshold with a given probability.
@@ -126,7 +128,7 @@ def infect(threshold, p1, p2):
         if p1.color == RED:  # Check if person1 is infected
             if np.random.rand() < INFECTION_PROBABILITY:
                 p2.infected = True  # Infect p2
-
+'''
 
 timer = pygame.time
 # Main loop
@@ -145,7 +147,7 @@ while running:
 
         # Infect people
     for i, person1 in enumerate(people):
-        for j, person2 in enumerate(people):
+        for j, person2 in enumerate(people[i + 1:]):
             if i != j:
                 draw_edge_and_infect(person1, person2, INFECTION_RADIUS)
 
