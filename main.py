@@ -118,6 +118,15 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int):
                 vertex1.infected = True
 
 
+def simulate_one_time_step(people):
+    """
+    Simulates one time step of epidemic spread.
+    :param people: List of Person objects representing individuals in the simulation.
+    """
+    for person1, person2 in itertools.combinations(people, 2):
+        draw_edge_and_infect(person1, person2, INFECTION_RADIUS)
+
+
 '''
 def infect(threshold, p1, p2):
     """
@@ -136,7 +145,9 @@ def infect(threshold, p1, p2):
 timer = pygame.time
 # Main loop
 running = True
-while running:
+num_iterations = 1000  # Example: Run the simulation for 1000 iterations
+iteration = 0
+while running and iteration < num_iterations:
     screen.fill(BLACK)
 
     for event in pygame.event.get():
@@ -149,8 +160,9 @@ while running:
         particle.draw()
 
     # Infect people
-    for person1, person2 in itertools.combinations(people, 2):
-        draw_edge_and_infect(person1, person2, INFECTION_RADIUS)
+    simulate_one_time_step(people)
+
+    iteration += 1  # Increment the iteration count
 
     pygame.display.flip()  # Optional delay for smoother animation
 
