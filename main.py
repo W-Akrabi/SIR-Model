@@ -38,8 +38,8 @@ class Person:
         self.y = np.random.randint(0, HEIGHT)
         self.radius = 3
         self.color = WHITE
-        self.speed_x = np.random.uniform(-1, 1)
-        self.speed_y = np.random.uniform(-1, 1)
+        self.speed_x = np.random.uniform(-0.1, 0.1)
+        self.speed_y = np.random.uniform(-0.1, 0.1)
         self.infected = False
 
     def move(self):
