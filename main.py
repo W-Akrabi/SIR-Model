@@ -108,10 +108,12 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int):
                          (int(vertex2.x), int(vertex2.y)))
         # Check if one is infected and the other is not, then infect based on the infection probability
         if vertex1.infected and not vertex2.infected:
-            if np.random.rand() < INFECTION_PROBABILITY:
+            infect = np.random.rand() * 0.1
+            if infect < INFECTION_PROBABILITY:
                 vertex2.infected = True
         elif vertex2.infected and not vertex1.infected:
-            if np.random.rand() < INFECTION_PROBABILITY:
+            infect = np.random.rand() * 0.1
+            if infect < INFECTION_PROBABILITY:
                 vertex1.infected = True
 
 
