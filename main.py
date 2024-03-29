@@ -3,6 +3,8 @@ import pygame
 import numpy as np
 import networkx as nx
 import matplotlib as plt
+import itertools
+import random
 
 # Initialize Pygame
 pygame.init()
@@ -107,12 +109,11 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int):
         pygame.draw.line(screen, WHITE, (int(vertex1.x), int(vertex1.y)),
                          (int(vertex2.x), int(vertex2.y)))
         # Check if one is infected and the other is not, then infect based on the infection probability
+        infect = np.random.rand() * 10
         if vertex1.infected and not vertex2.infected:
-            infect = np.random.rand() * 0.1
             if infect < INFECTION_PROBABILITY:
                 vertex2.infected = True
         elif vertex2.infected and not vertex1.infected:
-            infect = np.random.rand() * 0.1
             if infect < INFECTION_PROBABILITY:
                 vertex1.infected = True
 
@@ -147,11 +148,9 @@ while running:
         particle.move()
         particle.draw()
 
-        # Infect people
-    for i, person1 in enumerate(people):
-        for j, person2 in enumerate(people[i + 1:]):
-            if i != j:
-                draw_edge_and_infect(person1, person2, INFECTION_RADIUS)
+    # Infect people
+    for person1, person2 in itertools.combinations(people, 2):
+        draw_edge_and_infect(person1, person2, INFECTION_RADIUS)
 
     pygame.display.flip()  # Optional delay for smoother animation
 
