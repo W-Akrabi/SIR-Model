@@ -143,26 +143,32 @@ def infect(threshold, p1, p2):
 timer = pygame.time
 # Main loop
 running = True
-num_iterations = 10000  # Example: Run the simulation for 1000 iterations
+num_iterations = 3000  # Example: Run the simulation for 1000 iterations
 iteration = 0
+clock = pygame.time.Clock()
+paused = False
 while running and iteration < num_iterations:
     screen.fill(black)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:  # Example: Use space bar to toggle pause
+                paused = not paused
 
+    if not paused:
     # Move people
-    for particle in people:
-        particle.move()
-        particle.draw()
+        for particle in people:
+            particle.move()
+            particle.draw()
 
-    # Infect people
-    simulate_one_time_step(people)
+        # Infect people
+        simulate_one_time_step(people)
 
-    iteration += 1  # Increment the iteration count
-
-    pygame.display.flip()  # Optional delay for smoother animation
+        iteration += 1  # Increment the iteration count
+        clock.tick(280)
+        pygame.display.flip()  # Optional delay for smoother animation
 
 pygame.quit()
 
