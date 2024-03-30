@@ -3,6 +3,8 @@ import pygame
 import numpy as np
 import networkx as nx
 import itertools
+import preventions
+import statistics
 
 # Initialize Pygame
 pygame.init()
@@ -158,7 +160,7 @@ while running and iteration < num_iterations:
                 paused = not paused
 
     if not paused:
-    # Move people
+        # Move people
         for particle in people:
             particle.move()
             particle.draw()
