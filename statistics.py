@@ -1,23 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from main import simulate_one_time_step
-
-
-def track_infections_over_time(people, num_iterations):
-    """
-    Track the number of infected individuals over the course of the simulation.
-    Args:
-    - people: List of Person objects representing individuals in the simulation.
-    - num_iterations: Number of iterations (time steps) to run the simulation.
-    Returns:
-    - List of integers representing the number of infected individuals at each iteration.
-    """
-    infected_counts = []
-    for _ in range(num_iterations):
-        num_infected = sum(person.infected for person in people)
-        infected_counts.append(num_infected)
-        simulate_one_time_step(people)  # Simulate one time step of the epidemic
-    return infected_counts
 
 
 def plot_infection_curve(infected_counts):

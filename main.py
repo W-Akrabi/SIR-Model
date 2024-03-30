@@ -3,7 +3,6 @@ import pygame
 import numpy as np
 import networkx as nx
 import itertools
-import preventions
 import statistics
 
 # Initialize Pygame
@@ -127,20 +126,22 @@ def simulate_one_time_step(people):
         draw_edge_and_infect(person1, person2, infection_radius)
 
 
-'''
-def infect(threshold, p1, p2):
+def track_infections_over_time(people, num_iterations):
     """
-    Infects people within a certain distance threshold with a given probability.
-    :param threshold: The distance threshold for infection.
-    :param p1: First particle.
-    :param p2: Second particle.
+    Track the number of infected individuals over the course of the simulation.
+    Args:
+    - people: List of Person objects representing individuals in the simulation.
+    - num_iterations: Number of iterations (time steps) to run the simulation.
+    Returns:
+    - List of integers representing the number of infected individuals at each iteration.
     """
-    distance = calculate_distance(p1, p2)
-    if distance < threshold:
-        if p1.color == RED:  # Check if person1 is infected
-            if np.random.rand() < INFECTION_PROBABILITY:
-                p2.infected = True  # Infect p2
-'''
+    infected_counts = []
+    for _ in range(num_iterations):
+        num_infected = sum(person.infected for person in people)
+        infected_counts.append(num_infected)
+        simulate_one_time_step(people)  # Simulate one time step of the epidemic
+    return infected_counts
+
 
 timer = pygame.time
 # Main loop
@@ -173,6 +174,7 @@ while running and iteration < num_iterations:
         pygame.display.flip()  # Optional delay for smoother animation
 
 pygame.quit()
+statistics.plot_infection_curve(50)
 
 if __name__ == '__main__':
     # You can uncomment the following lines for code checking/debugging purposes.
