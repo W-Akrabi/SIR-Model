@@ -2,31 +2,29 @@
 import pygame
 import numpy as np
 import networkx as nx
-import matplotlib as plt
 import itertools
-import random
 
 # Initialize Pygame
 pygame.init()
 
 # Screen dimensions
-WIDTH, HEIGHT = 800, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+width, height = 800, 600
+screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Particle Animation with SIR Model")
 
 # Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
+white = (255, 255, 255)
+black = (0, 0, 0)
+red = (255, 0, 0)
+green = (0, 255, 0)
 
 # Number of people
-NUM_Persons = 50
+num_persons = 50
 
 # SIR Parameters
-INFECTION_RADIUS = 20
-INFECTION_PROBABILITY = 0.03
-RECOVERY_TIME = 300
+infection_radius = 20
+infection_probability = 0.03
+recovery_time = 300
 
 
 # Particle class
@@ -36,12 +34,12 @@ class Person:
     """
 
     def __init__(self):
-        self.x = np.random.randint(0, WIDTH)
-        self.y = np.random.randint(0, HEIGHT)
+        self.x = np.random.randint(0, width)
+        self.y = np.random.randint(0, height)
         self.radius = 3
-        self.color = WHITE
-        self.speed_x = np.random.uniform(-0.1, 0.1)
-        self.speed_y = np.random.uniform(-0.1, 0.1)
+        self.color = white
+        self.speed_x = np.random.uniform(-1, 1)
+        self.speed_y = np.random.uniform(-1, 1)
         self.infected = False
 
     def move(self):
@@ -52,9 +50,9 @@ class Person:
         self.y += self.speed_y
 
         # Bounce off edges
-        if self.x <= 0 or self.x >= WIDTH:
+        if self.x <= 0 or self.x >= width:
             self.speed_x *= -1
-        if self.y <= 0 or self.y >= HEIGHT:
+        if self.y <= 0 or self.y >= height:
             self.speed_y *= -1
 
     # Modify the draw method of the Person class to change the color of infected particles
@@ -63,14 +61,14 @@ class Person:
         draws the vertexes with its correspomding color in pyagame window
         """
         if self.infected:
-            color = RED
+            color = red
         else:
-            color = WHITE
+            color = white
         pygame.draw.circle(screen, color, (int(self.x), int(self.y)), self.radius)
 
 
 # Create people
-people = [Person() for _ in range(NUM_Persons)]
+people = [Person() for _ in range(num_persons)]
 
 infected_particle = people[np.random.choice(len(people))]
 infected_particle.infected = True
@@ -106,15 +104,15 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int):
     """
     distance = calculate_distance(vertex1, vertex2)
     if distance < threshold:  # Adjust the threshold distance as needed
-        pygame.draw.line(screen, WHITE, (int(vertex1.x), int(vertex1.y)),
+        pygame.draw.line(screen, white, (int(vertex1.x), int(vertex1.y)),
                          (int(vertex2.x), int(vertex2.y)))
         # Check if one is infected and the other is not, then infect based on the infection probability
-        infect = np.random.rand() * 10
+        infect = np.random.rand()
         if vertex1.infected and not vertex2.infected:
-            if infect < INFECTION_PROBABILITY:
+            if infect < infection_probability:
                 vertex2.infected = True
         elif vertex2.infected and not vertex1.infected:
-            if infect < INFECTION_PROBABILITY:
+            if infect < infection_probability:
                 vertex1.infected = True
 
 
@@ -124,7 +122,7 @@ def simulate_one_time_step(people):
     :param people: List of Person objects representing individuals in the simulation.
     """
     for person1, person2 in itertools.combinations(people, 2):
-        draw_edge_and_infect(person1, person2, INFECTION_RADIUS)
+        draw_edge_and_infect(person1, person2, infection_radius)
 
 
 '''
@@ -145,10 +143,10 @@ def infect(threshold, p1, p2):
 timer = pygame.time
 # Main loop
 running = True
-num_iterations = 1000  # Example: Run the simulation for 1000 iterations
+num_iterations = 10000  # Example: Run the simulation for 1000 iterations
 iteration = 0
 while running and iteration < num_iterations:
-    screen.fill(BLACK)
+    screen.fill(black)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
