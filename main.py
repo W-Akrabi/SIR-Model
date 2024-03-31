@@ -25,7 +25,7 @@ num_persons = 50
 # SIR Parameters
 infection_radius = 20
 infection_probability = 0.03
-recovery_time = 300
+recovery_time = 100
 
 
 # Particle class
@@ -42,6 +42,8 @@ class Person:
         self.speed_x = np.random.uniform(-1, 1)
         self.speed_y = np.random.uniform(-1, 1)
         self.infected = False
+        self.recovered = False
+        self.infection_timer = 0
 
     def move(self):
         """
@@ -63,6 +65,8 @@ class Person:
         """
         if self.infected:
             color = red
+        elif self.recovered:
+            color = green
         else:
             color = white
         pygame.draw.circle(screen, color, (int(self.x), int(self.y)), self.radius)
@@ -115,6 +119,20 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int):
         elif vertex2.infected and not vertex1.infected:
             if infect < infection_probability:
                 vertex1.infected = True
+
+        if vertex1.infected:
+            vertex1.infection_timer += 1
+            if vertex1.infection_timer >= recovery_time:
+                vertex1.infected = False
+                vertex1.recovered = True
+                vertex1.infection_timer = 0
+
+        if vertex2.infected:
+            vertex2.infection_timer += 1
+            if vertex2.infection_timer >= recovery_time:
+                vertex2.infected = False
+                vertex2.recovered = True
+                vertex2.infection_timer = 0
 
 
 def simulate_one_time_step(people):
@@ -170,11 +188,11 @@ while running and iteration < num_iterations:
         simulate_one_time_step(people)
 
         iteration += 1  # Increment the iteration count
+        print(iteration)
         clock.tick(280)
         pygame.display.flip()  # Optional delay for smoother animation
 
 pygame.quit()
-statistics.plot_infection_curve(50)
 
 if __name__ == '__main__':
     # You can uncomment the following lines for code checking/debugging purposes.
