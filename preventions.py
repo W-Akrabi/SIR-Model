@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 
 
@@ -79,14 +81,16 @@ def contact_tracing(people, infected_threshold):
                     # Implement further actions such as isolation or testing
 
 
-def ventilation(people, ventilation_effectiveness):
+def air_purification(people, ventilation_effectiveness):
     """
-    Improve ventilation to reduce the concentration of infectious aerosols in indoor environments.
+    Improve ventilation to reduce the concentration of infectious aerosols in environments.
     :param people: List of Person objects.
     :param ventilation_effectiveness: Effectiveness of ventilation (0 to 1).
     """
     # Implement ventilation measures such as increasing airflow or using air purifiers
-    pass
+    for person in people:
+        if person.infected and np.random.rand() > ventilation_effectiveness:
+            person.infected = False
 
 
 def staggered_work_hours(people, staggered_factor):
@@ -106,4 +110,8 @@ def remote_work(people, remote_work_factor):
     :param remote_work_factor: Factor to increase remote work (0 to 1).
     """
     # Transition individuals to remote work where feasible
-    pass
+    random_num = int(random.random() * 50)
+    for _ in range(random_num):
+        person = people[np.random.choice(len(people))]
+        person.speed_x *= remote_work_factor  # Reduce movement speed
+        person.speed_y *= remote_work_factor
