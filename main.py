@@ -1,8 +1,7 @@
 """main"""
 import pygame
 import numpy as np
-import networkx as nx
-import itertools
+import graph_model
 import statistics
 
 # Initialize Pygame
@@ -79,7 +78,7 @@ infected_particle = people[np.random.choice(len(people))]
 infected_particle.infected = True
 
 # Create graph to represent connections between people
-G = nx.Graph()
+G = graph_model.Graph()
 
 # Add people as nodes to the graph
 for particle in people:
@@ -140,7 +139,7 @@ def simulate_one_time_step(G):
     Simulates one time step of epidemic spread.
     :param G: List of Person objects representing individuals in the simulation.
     """
-    for person1, person2 in G.edges():
+    for person1, person2 in G.edges:
         draw_edge_and_infect(person1, person2, infection_radius)
 
 
@@ -193,12 +192,6 @@ while running and current_time - start_time < 10000:
 pygame.quit()
 
 if __name__ == '__main__':
-    # You can uncomment the following lines for code checking/debugging purposes.
-    # However, we recommend commenting out these lines when working with the large
-    # datasets, as checking representation invariants and preconditions greatly
-    # increases the running time of the functions/methods.
-    # import python_ta.contracts
-    # python_ta.contracts.check_all_contracts()
 
     import doctest
 
