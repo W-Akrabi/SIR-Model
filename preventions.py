@@ -100,7 +100,14 @@ def staggered_work_hours(people, staggered_factor):
     :param staggered_factor: Factor to adjust work hours (0 to 1).
     """
     # Adjust work hours for individuals to stagger their arrival and departure times
-    pass
+    total_people = len(people)
+    num_staggered_people = int(total_people * staggered_factor)
+    staggered_people = random.sample(people, num_staggered_people)
+
+    for person in staggered_people:
+        # Reduce the movement speed only for the staggered individuals
+        person.speed_x *= 0.5  # Example: Reduce movement speed by half
+        person.speed_y *= 0.5  # Example: Reduce movement speed by half
 
 
 def remote_work(people, remote_work_factor):
