@@ -37,8 +37,8 @@ def get_user_input() -> tuple:
     - 0 >= num_persons >= 75
     - 0 >= num_persons >= 20
     """
-    num_people = input('Number of people in your simulation (>=75)')
-    infect_radius = input('Radius of infection around a single person (>=20)')
+    num_people = int(input('Number of people in your simulation (>=75)'))
+    infect_radius = int(input('Radius of infection around a single person (>=20)'))
 
     return num_people, infect_radius
 
@@ -50,17 +50,22 @@ def get_preventions() -> list[str]:
     - 0 >= num_persons >= 75
     - 0 >= num_persons >= 20
     """
+    preventions_so_far = []
+    prevention_options = ('Preventions: vaccines, lockdown, social distancing, masks, '
+                          'hygiene, contact tracing, air purification, remote work, staggered working hours')
     valid_answers = ['vaccines', 'lockdown', 'social distancing', 'masks', 'hygiene',
                      'contact tracing', 'air purification', 'remote work', 'staggered working hours']
-    preventions_so_far = []
-    answer = input('Preventions: vaccines, lockdown, social distancing, masks, hygiene, '
-                   'contact tracing, air purification, remote work, staggered working hours')
 
-    while len(preventions_so_far) < 3 and answer != 'DONE':
-        if answer not in preventions_so_far and answer in valid_answers:
+    print('Select up to three preventions. Type "DONE" to finish')
+
+    while len(preventions_so_far) != 3:
+        answer = input(prevention_options)
+        if answer == 'DONE':
+            break
+        elif answer in valid_answers and answer not in preventions_so_far:
             preventions_so_far.append(answer)
-        answer = input('Preventions: vaccines, lockdown, social distancing, masks, hygiene, '
-                       'contact tracing, air purification, remote work, staggered working hours')
+        else:
+            print("Invalid input or already selected. Please choose again.")
 
     return preventions_so_far
 
@@ -96,8 +101,8 @@ def run_preventions(prevention_list: list[str]) -> None:
 
 if __name__ == "__main__":
 
-    preventions = get_preventions()
-    run_preventions(preventions)
+    preventions_list = get_preventions()
+    run_preventions(preventions_list)
 
     while running:
         screen.fill(logic.black)
