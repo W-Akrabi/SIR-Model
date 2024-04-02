@@ -1,23 +1,28 @@
-def estimate_daily_infection_rate(data):
-    """
-  Estimates daily infection rate as difference between consecutive days in data.
-
-  Args:
-      data (list): List of total cases for each day.
-
-  Returns:
-      list: List of estimated daily infection rates.
-  """
-    if len(data) < 2:
-        raise ValueError("Data requires at least two days of cases.")
-    daily_rates = []
-    for i in range(1, len(data)):
-        daily_rates.append(data[i] - data[i - 1])
-    return daily_rates
+import pandas as pd
 
 
-# Assuming you have historical data in a list
-cases_data = [10, 25, 42, 68]
+def calculate_global_rates(csv_file):
+    """Made a function to read from all the data in the file and give the global infection, mortality and recovery rate
+       of all countries in dataset"""
+    df = pd.read_csv(csv_file)
+    global_total_cases = df['TotalCases'].sum()
+    global_population = df['Population'].sum()
+    global_infection_rate = global_total_cases / global_population
+    global_total_deaths = df['TotalDeaths'].sum()
+    global_mortality_rate = global_total_deaths / global_total_cases
+    global_total_recovered = df['TotalRecovered'].sum()
+    global_recovery_rate = global_total_recovered / global_total_cases
 
-daily_infection_rates = estimate_daily_infection_rate(cases_data)
-print(f"Daily Infection Rates: {daily_infection_rates}")
+    return global_infection_rate, global_mortality_rate, global_recovery_rate
+
+
+global_infect, global_mortality, global_recovery = calculate_global_rates('worldometer_data.csv')
+print(global_recovery)
+print(global_infect)
+print(global_mortality)
+# Country wise Data
+df = pd.read_csv('worldometer_data.csv')
+df['Infection Rate'] = df['TotalCases'] / df['Population']
+df['Mortality Rate'] = df['TotalDeaths'] / df['TotalCases']
+df['Recovery Rate'] = df['TotalRecovered'] / df['TotalCases']
+# print(df[['Country/Region', 'Infection Rate', 'Mortality Rate', 'Recovery Rate']])
