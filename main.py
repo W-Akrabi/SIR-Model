@@ -10,7 +10,7 @@ pygame.init()
 # Screen dimensions
 width, height = 800, 600
 screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Particle Animation with SIR Model")
+pygame.display.set_caption("SIR Model Simulation")
 
 
 # Number of people
