@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
 
 def plot_infection_curve(infected_counts):
@@ -8,13 +8,22 @@ def plot_infection_curve(infected_counts):
     Args:
     - infected_counts: List of integers representing the number of infected individuals at each iteration.
     """
-    plt.figure(figsize=(10, 6))
-    plt.plot(infected_counts, color='red', linestyle='-', marker='o', markersize=4)
-    plt.title('Infection Curve Over Time')
-    plt.xlabel('Time Steps')
-    plt.ylabel('Number of Infected Individuals')
-    plt.grid(True)
-    plt.show()
+    # Calculate decimal days passed
+    days_passed = [i / 300 for i in range(len(infected_counts))]  # Assuming 300 iterations per day
+
+    # Create Plotly figure
+    fig = go.Figure()
+
+    # Add infected curve
+    fig.add_trace(go.Scatter(x=days_passed, y=infected_counts, mode='lines', name='Infected', line=dict(color='red')))
+
+    # Update layout
+    fig.update_layout(title='Infection Curve',
+                      xaxis_title='Time (Days)',
+                      yaxis_title='Number of Infected Individuals')
+
+    # Show plot
+    fig.show()
 
 
 def calculate_infection_rate(infected_counts):
@@ -67,15 +76,23 @@ def plot_sir_curve(infected_counts, recovered_counts, susceptible_counts=None):
       recovered_counts: List of integers representing number of recovered individuals at each iteration
       susceptible_counts: List of integers representing number of susceptible individuals at each iteration (optional)
     """
-    plt.figure(figsize=(10, 6))
-    plt.plot(infected_counts, label='Infected', color='red')
-    if recovered_counts:
-        plt.plot(recovered_counts, label='Recovered', color='green')
-    if susceptible_counts:
-        plt.plot(susceptible_counts, label='Susceptible', color='blue')
-    plt.title('SIR Curve Over Time')
-    plt.xlabel('Time Steps')
-    plt.ylabel('Number of Individuals')
-    plt.grid(True)
-    plt.legend()
-    plt.show()
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=list(range(len(infected_counts))),
+                             y=infected_counts,
+                             mode='lines',
+                             name='Infected',
+                             line=dict(color='red')))
+    fig.add_trace(go.Scatter(x=list(range(len(recovered_counts))),
+                             y=recovered_counts,
+                             mode='lines',
+                             name='Recovered',
+                             line=dict(color='green')))
+    fig.add_trace(go.Scatter(x=list(range(len(susceptible_counts))),
+                             y=susceptible_counts,
+                             mode='lines',
+                             name='Susceptible',
+                             line=dict(color='blue')))
+    fig.update_layout(title='SIR Model Simulation',
+                      xaxis_title='Time',
+                      yaxis_title='Number of Individuals')
+    fig.show()
