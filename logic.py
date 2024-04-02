@@ -66,7 +66,7 @@ class Person:
             self.speed_y *= -1
 
     # Modify the draw method of the Person class to change the color of infected particles
-    def draw(self, red, green, white, screen):
+    def draw(self, screen):
         """
         draws the vertexes with its correspomding color in pyagame window
         """
