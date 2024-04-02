@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def calculate_global_rates(csv_file):
+def calculate_global_rates(csv_file) -> tuple:
     """Made a function to read from all the data in the file and give the global infection, mortality and recovery rate
        of all countries in dataset"""
     df = pd.read_csv(csv_file)
