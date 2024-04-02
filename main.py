@@ -34,11 +34,18 @@ def get_user_input() -> tuple:
     """
     Get user input for variables that user's are allowed to control
     Preconditions:
-    - 0 >= num_persons >= 75
-    - 0 >= num_persons >= 20
+    - 0 <= num_persons <= 75
+    - 0 <= num_persons <= 20
     """
-    num_people = int(input('Number of people in your simulation (>=75)'))
-    infect_radius = int(input('Radius of infection around a single person (>=20)'))
+    num_people = int(input('Number of people in your simulation (0-75): '))
+    while not (0 <= num_people <= 75):
+        print("Invalid input. Number of people must be between 0 and 75.")
+        num_people = int(input('Number of people in your simulation (0-75): '))
+
+    infect_radius = int(input('Radius of infection around a single person (0-20): '))
+    while not (0 <= infect_radius <= 20):
+        print("Invalid input. Infection radius must be between 0 and 20.")
+        infect_radius = int(input('Radius of infection around a single person (0-20): '))
 
     return num_people, infect_radius
 
