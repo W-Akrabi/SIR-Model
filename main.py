@@ -12,22 +12,9 @@ width, height = 800, 600
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("SIR Model Simulation")
 
-
 # SIR Parameters
 infection_probability = 0.03
 recovery_time = 100
-
-
-# Main loop
-running = True
-clock = pygame.time.Clock()
-start_time = pygame.time.get_ticks()
-paused = False
-
-# Lists to track infection statistics over time
-infected_counts = []
-recovered_counts = []
-susceptible_counts = []
 
 
 def get_user_input() -> tuple:
@@ -77,10 +64,6 @@ def get_preventions() -> list[str]:
     return preventions_so_far
 
 
-num_persons, infection_radius = get_user_input()
-G = logic.community(num_persons)
-
-
 def run_preventions(prevention_list: list[str]) -> None:
     """
     Run preventions on the data based on the users input
@@ -105,6 +88,20 @@ def run_preventions(prevention_list: list[str]) -> None:
         elif prevention == 'staggered working hours':
             preventions.staggered_work_hours(G, retarded_autistic_variable)
 
+
+num_persons, infection_radius = get_user_input()
+G = logic.community(num_persons)
+
+# Lists to track infection statistics over time
+infected_counts = []
+recovered_counts = []
+susceptible_counts = []
+
+# Main loop
+running = True
+clock = pygame.time.Clock()
+start_time = pygame.time.get_ticks()
+paused = False
 
 if __name__ == "__main__":
 
