@@ -67,6 +67,23 @@ def analyze_sir_simulation(infected_counts, recovered_counts, population):
     print(f"Maximum Infection Rate: {max_infection_rate}")
     print(f"Recovery Rate: {recovery_rate}")
 
+    # Create Plotly figure for infected and recovered counts
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=list(range(len(infected_counts))),
+                             y=infected_counts,
+                             mode='lines',
+                             name='Infected',
+                             line=dict(color='red')))
+    fig.add_trace(go.Scatter(x=list(range(len(recovered_counts))),
+                             y=recovered_counts,
+                             mode='lines',
+                             name='Recovered',
+                             line=dict(color='green')))
+    fig.update_layout(title='SIR Model Simulation',
+                      xaxis_title='Time',
+                      yaxis_title='Number of Individuals')
+    fig.show()
+
 
 def plot_sir_curve(infected_counts, recovered_counts, susceptible_counts=None):
     """

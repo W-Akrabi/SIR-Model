@@ -84,12 +84,12 @@ class Person:
         draws the vertexes with its correspomding color in pyagame window
         """
         if self.infected:
-            color = (255, 0, 0)  # red
+            self.color = (255, 0, 0)  # red
         elif self.recovered:
-            color = (0, 255, 0)  # Green
+            self.color = (0, 255, 0)  # Green
         else:
-            color = (0, 0, 255)  # white
-        pygame.draw.circle(screen, color, (int(self.x), int(self.y)), self.radius)
+            self.color = (0, 0, 255)  # blue
+        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
 
 
 # Create people
@@ -139,7 +139,7 @@ def draw_edge_and_infect(vertex1: Person, vertex2: Person, model_params: tuple[i
     threshold, infection_probability, recovery_time = model_params
     distance = calculate_distance(vertex1, vertex2)
     if distance < threshold:  # Adjust the threshold distance as needed
-        pygame.draw.line(screen, (255, 0, 0), (int(vertex1.x), int(vertex1.y)),
+        pygame.draw.line(screen, (255, 255, 255), (int(vertex1.x), int(vertex1.y)),
                          (int(vertex2.x), int(vertex2.y)))
         # Check if one is infected and the other is not, then infect based on the infection probability
         infect = np.random.rand()

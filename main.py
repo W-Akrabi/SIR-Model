@@ -83,13 +83,7 @@ def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_var
 
 
 if __name__ == "__main__":
-    pygame.init()
     retarded_autistic_variable = 2
-    # Screen dimensions
-    width, height = 800, 600
-    screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("SIR Model Simulation")
-
     # SIR Parameters
     infection_probability = getting_data.global_infect * 10
     recovery_time = 100
@@ -102,14 +96,21 @@ if __name__ == "__main__":
     recovered_counts = []
     susceptible_counts = []
 
+    preventions_list = get_preventions()
+    run_preventions(preventions_list, G, retarded_autistic_variable)
+
+    # Now that user input is gathered and preventions are applied, initialize Pygame
+    pygame.init()
+    # Screen dimensions
+    width, height = 800, 600
+    screen = pygame.display.set_mode((width, height))
+    pygame.display.set_caption("SIR Model Simulation")
+
     # Main loop
     running = True
     clock = pygame.time.Clock()
     start_time = pygame.time.get_ticks()
     paused = False
-
-    preventions_list = get_preventions()
-    run_preventions(preventions_list, G, retarded_autistic_variable)
 
     while running:
         screen.fill((0, 0, 0))
@@ -153,6 +154,7 @@ if __name__ == "__main__":
 
     # Plot the infection statistics over time using Plotly
     statistics.plot_sir_curve(infected_counts, recovered_counts, susceptible_counts)
+    statistics.analyze_sir_simulation(infected_counts, recovered_counts, num_persons)
 
     python_ta.check_all(config={
         'extra-imports': [],  # the names (strs) of imported modules
