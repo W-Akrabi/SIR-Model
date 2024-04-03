@@ -1,3 +1,4 @@
+"""Getting and performing calculations on data"""
 import pandas as pd
 
 
