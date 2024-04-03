@@ -14,12 +14,6 @@ Functions:
 - track_infections_over_time(people, num_iterations, infection_radius, infection_probability, recovery_time, screen):
     Tracks the number of infected individuals over the course of the simulation.
 
-Constants:
-- white: RGB color value for white.
-- black: RGB color value for black.
-- red: RGB color value for red.
-- green: RGB color value for green.
-
 Dependencies:
 - pygame: Library for creating video games and multimedia applications.
 - numpy: Library for numerical computations.
@@ -47,7 +41,7 @@ class Person:
         self.recovered = False
         self.infection_timer = 0
 
-    def move(self):
+    def move(self) -> None:
         """
         moves the vertex in a direction
         """
@@ -61,7 +55,7 @@ class Person:
             self.speed_y *= -1
 
     # Modify the draw method of the Person class to change the color of infected particles
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         """
         draws the vertexes with its correspomding color in pyagame window
         """

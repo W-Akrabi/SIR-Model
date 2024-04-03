@@ -1,11 +1,11 @@
 """Preventions"""
 import random
-from typing import Any
 import numpy as np
 import python_ta
+import graph_model
 
 
-def vaccine_prevention(people: Any, vaccine_effectiveness: int) -> None:
+def vaccine_prevention(people: graph_model.Graph(), vaccine_effectiveness: int) -> None:
     """
     Apply vaccine prevention by reducing the infection probability for vaccinated individuals.
     :param people: List of Person objects.
@@ -16,7 +16,7 @@ def vaccine_prevention(people: Any, vaccine_effectiveness: int) -> None:
             person.infected = False  # Reduce infection probability based on vaccine effectiveness
 
 
-def lockdown(people: Any, lockdown_factor: int) -> None:
+def lockdown(people: graph_model.Graph(), lockdown_factor: int) -> None:
     """
     Apply lockdown by reducing the movement speed of individuals.
     :param people: List of Person objects.
@@ -27,7 +27,7 @@ def lockdown(people: Any, lockdown_factor: int) -> None:
         person.speed_y *= lockdown_factor
 
 
-def social_distance(people: Any, distance_threshold: int) -> None:
+def social_distance(people: graph_model.Graph(), distance_threshold: int) -> None:
     """
     Implement social distancing by increasing the distance between individuals.
     :param people: List of Person objects.
@@ -47,7 +47,7 @@ def social_distance(people: Any, distance_threshold: int) -> None:
                 person2.y += move_y
 
 
-def hygiene(people: Any, hygiene_effectiveness: int) -> None:
+def hygiene(people: graph_model.Graph(), hygiene_effectiveness: int) -> None:
     """
     Apply hygiene practices by reducing the infection probability for individuals with good hygiene.
     :param people: List of Person objects.
@@ -58,7 +58,7 @@ def hygiene(people: Any, hygiene_effectiveness: int) -> None:
             person.infected = False  # Reduce infection probability based on hygiene effectiveness
 
 
-def mask_wearing(people: Any, mask_effectiveness: int) -> None:
+def mask_wearing(people: graph_model.Graph(), mask_effectiveness: int) -> None:
     """
     Implement mask wearing by reducing the infection probability for individuals wearing masks.
     :param people: List of Person objects.
@@ -69,7 +69,7 @@ def mask_wearing(people: Any, mask_effectiveness: int) -> None:
             person.infected = False  # Reduce infection probability based on mask effectiveness
 
 
-def contact_tracing(people: Any, infected_threshold: int) -> None:
+def contact_tracing(people: graph_model.Graph(), infected_threshold: int) -> None:
     """
     Implement contact tracing to identify and isolate individuals who have been in contact with infected individuals.
     :param people: List of Person objects.
@@ -88,7 +88,7 @@ def contact_tracing(people: Any, infected_threshold: int) -> None:
                     # Implement further actions such as isolation or testing
 
 
-def air_purification(people: Any, ventilation_effectiveness: int) -> None:
+def air_purification(people: graph_model.Graph(), ventilation_effectiveness: int) -> None:
     """
     Improve ventilation to reduce the concentration of infectious aerosols in environments.
     :param people: List of Person objects.
@@ -100,7 +100,7 @@ def air_purification(people: Any, ventilation_effectiveness: int) -> None:
             person.infected = False
 
 
-def staggered_work_hours(people: Any, staggered_factor: int) -> None:
+def staggered_work_hours(people: graph_model.Graph(), staggered_factor: int) -> None:
     """
     Implement staggered work hours to reduce the number of people present in a shared space at any given time.
     :param people: List of Person objects.
@@ -117,7 +117,7 @@ def staggered_work_hours(people: Any, staggered_factor: int) -> None:
         person.speed_y *= 0.5  # Example: Reduce movement speed by half
 
 
-def remote_work(people: Any, remote_work_factor: int) -> None:
+def remote_work(people: graph_model.Graph(), remote_work_factor: int) -> None:
     """
     Encourage remote work to minimize physical interactions in workplaces.
     :param people: List of Person objects.

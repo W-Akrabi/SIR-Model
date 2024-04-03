@@ -1,6 +1,6 @@
 """main"""
-from typing import Any
 import statistics
+import graph_model
 import python_ta
 import pygame
 import logic
@@ -57,7 +57,7 @@ def get_preventions() -> list[str]:
     return preventions_so_far
 
 
-def run_preventions(prevention_list: list[str], p: Any, dumb_variable: int) -> None:
+def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_variable: int) -> None:
     """
     Run preventions on the data based on the users input
     """
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     run_preventions(preventions_list, G, retarded_autistic_variable)
 
     while running:
-        screen.fill(logic.black)
+        screen.fill((0, 0, 0))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
