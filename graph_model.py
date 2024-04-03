@@ -21,17 +21,22 @@ Example:
     >>> G.has_edge(1, 2)
     True
 """
+from typing import Any, Iterator
+
+import python_ta
 
 
 class Graph:
     """A class for representing an undirected graph."""
+    nodes: dict
+    edges: dict
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Graph."""
         self.nodes = {}  # Dictionary to store nodes and their attributes
         self.edges = {}  # Dictionary to store edges and their attributes
 
-    def add_node(self, node, **attr):
+    def add_node(self, node: Any, **attr: Any) -> None:
         """Add a node to the graph.
 
         Parameters:
@@ -44,20 +49,7 @@ class Graph:
         if node not in self.nodes:
             self.nodes[node] = attr
 
-    def add_nodes_from(self, nodes, **attr):
-        """Add multiple nodes to the graph.
-
-        Parameters:
-            nodes: iterable
-                An iterable of nodes.
-            attr: dict, optional
-                Node attributes.
-
-        """
-        for node in nodes:
-            self.add_node(node, **attr)
-
-    def remove_node(self, node):
+    def remove_node(self, node: Any) -> None:
         """Remove a node from the graph.
 
         Parameters:
@@ -71,18 +63,7 @@ class Graph:
                 if node in edge:
                     del self.edges[edge]
 
-    def remove_nodes_from(self, nodes):
-        """Remove multiple nodes from the graph.
-
-        Parameters:
-            nodes: iterable
-                An iterable of nodes to remove.
-
-        """
-        for node in nodes:
-            self.remove_node(node)
-
-    def add_edge(self, u, v, **attr):
+    def add_edge(self, u: Any, v: Any, **attr: Any) -> None:
         """Add an edge to the graph.
 
         Parameters:
@@ -95,20 +76,7 @@ class Graph:
         if (u, v) not in self.edges and (v, u) not in self.edges:
             self.edges[(u, v)] = attr
 
-    def add_edges_from(self, ebunch, **attr):
-        """Add multiple edges to the graph.
-
-        Parameters:
-            ebunch: iterable
-                An iterable of edge tuples.
-            attr: dict, optional
-                Edge attributes.
-
-        """
-        for edge in ebunch:
-            self.add_edge(*edge, **attr)
-
-    def remove_edge(self, u, v):
+    def remove_edge(self, u: Any, v: Any) -> None:
         """Remove an edge from the graph.
 
         Parameters:
@@ -121,18 +89,7 @@ class Graph:
         elif (v, u) in self.edges:
             del self.edges[(v, u)]
 
-    def remove_edges_from(self, ebunch):
-        """Remove multiple edges from the graph.
-
-        Parameters:
-            ebunch: iterable
-                An iterable of edge tuples to remove.
-
-        """
-        for edge in ebunch:
-            self.remove_edge(*edge)
-
-    def has_node(self, node):
+    def has_node(self, node: Any) -> bool:
         """Check if the graph contains the given node.
 
         Parameters:
@@ -146,7 +103,7 @@ class Graph:
         """
         return node in self.nodes
 
-    def has_edge(self, u, v):
+    def has_edge(self, u: Any, v: Any) -> bool:
         """Check if the graph contains the given edge.
 
         Parameters:
@@ -160,7 +117,7 @@ class Graph:
         """
         return (u, v) in self.edges or (v, u) in self.edges
 
-    def neighbors(self, node):
+    def neighbors(self, node: Any) -> set:
         """Get the neighbors of a node.
 
         Parameters:
@@ -178,16 +135,16 @@ class Graph:
                 nbrs.add(edge[0] if edge[1] == node else edge[1])
         return nbrs
 
-    def clear(self):
+    def clear(self) -> None:
         """Remove all nodes and edges from the graph."""
         self.nodes.clear()
         self.edges.clear()
 
-    def clear_edges(self):
+    def clear_edges(self) -> None:
         """Remove all edges from the graph."""
         self.edges.clear()
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator:
         """Iterate over the nodes. Use: 'for n in G'.
 
         Returns
@@ -197,7 +154,7 @@ class Graph:
         """
         return iter(self.nodes)
 
-    def __contains__(self, n):
+    def __contains__(self, n: Any) -> bool:
         """Returns True if n is a node, False otherwise. Use: 'n in G'.
         """
         try:
@@ -205,7 +162,7 @@ class Graph:
         except TypeError:
             return False
 
-    def __len__(self):
+    def __len__(self) -> int:
         """Returns the number of nodes in the graph. Use: 'len(G)'.
 
         Returns
@@ -220,7 +177,7 @@ class Graph:
         """
         return len(self.nodes)
 
-    def __getitem__(self, n):
+    def __getitem__(self, n: Any) -> set:
         """Returns a dict of neighbors of node n.  Use: 'G[n]'.
 
         Parameters
@@ -229,3 +186,11 @@ class Graph:
            A node in the graph.
         """
         return self.neighbors(n)
+
+
+if __name__ == "__main__":
+    python_ta.check_all(config={
+        'extra-imports': [],  # the names (strs) of imported modules
+        'allowed-io': [],  # the names (strs) of functions that call print/open/input
+        'max-line-length': 120
+    })
