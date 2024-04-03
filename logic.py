@@ -118,13 +118,15 @@ def calculate_distance(p1: Person, p2: Person) -> float:
     return np.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
 
 
-def draw_edge_and_infect(vertex1: Person, vertex2: Person, threshold: int, infection_probability: float,
+def draw_edge_and_infect(persons: tuple[Person, Person], threshold: int, infection_probability: float,
                          recovery_time: int, screen) -> None:
     """
     draws the edge between two people under a certain distance
     :param vertex1:
     :param vertex2:
     """
+    vertex1, vertex2 = persons
+
     distance = calculate_distance(vertex1, vertex2)
     if distance < threshold:  # Adjust the threshold distance as needed
         pygame.draw.line(screen, (255, 0, 0), (int(vertex1.x), int(vertex1.y)),
@@ -161,8 +163,6 @@ def simulate_one_time_step(people: graph_model.Graph(), infection_radius: int, i
     """
     for person1, person2 in people.edges:
         draw_edge_and_infect(person1, person2, infection_radius, infection_probability, recovery_time, screen)
-
-
 
 
 if __name__ == "__main__":

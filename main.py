@@ -129,8 +129,8 @@ if __name__ == "__main__":
 
             # Infect people
             for person1, person2 in G.edges:
-                logic.draw_edge_and_infect(person1, person2, infection_radius, infection_probability, recovery_time,
-                                           screen)
+                logic.draw_edge_and_infect((person1, person2), infection_radius, infection_probability,
+                                           recovery_time, screen)
 
             # Track infection statistics
             num_infected = sum(1 for p in G if p.infected)
