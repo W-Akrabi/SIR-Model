@@ -1,0 +1,7 @@
+# Graphics and data visualization
+plotly>=5.18.0
+pygame==2.5.2
+# Data obtaining and performing calculation
+pandas
+# For calculations
+numpy
