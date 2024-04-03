@@ -17,12 +17,13 @@ def calculate_global_rates(csv_file) -> tuple:
 
 
 global_infect, global_mortality, global_recovery = calculate_global_rates('worldometer_data.csv')
-print(global_recovery)
-print(global_infect)
-print(global_mortality)
+print("Global Infection Rate:", global_infect)
+print("Global Recovery Rate:", global_recovery)
+print("Global Mortality Rate:", global_mortality)
 # Country wise Data
 df = pd.read_csv('worldometer_data.csv')
 df['Infection Rate'] = df['TotalCases'] / df['Population']
 df['Mortality Rate'] = df['TotalDeaths'] / df['TotalCases']
 df['Recovery Rate'] = df['TotalRecovered'] / df['TotalCases']
-# print(df[['Country/Region', 'Infection Rate', 'Mortality Rate', 'Recovery Rate']])
+# print(df[['Country/Region', 'Infection Rate', 'Mortality Rate', 'Recovery Rate']]) uncomment this line to get country
+# uncomment above line to get country stats
