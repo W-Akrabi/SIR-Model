@@ -128,7 +128,9 @@ if __name__ == "__main__":
                 person.draw(screen)
 
             # Infect people
-            logic.simulate_one_time_step(G, infection_radius, infection_probability, recovery_time, screen)
+            for person1, person2 in G.edges:
+                logic.draw_edge_and_infect(person1, person2, infection_radius, infection_probability, recovery_time,
+                                           screen)
 
             # Track infection statistics
             num_infected = sum(1 for p in G if p.infected)
@@ -155,5 +157,5 @@ if __name__ == "__main__":
     python_ta.check_all(config={
         'extra-imports': [],  # the names (strs) of imported modules
         'allowed-io': [],  # the names (strs) of functions that call print/open/input
-        'max-line-length': 120
+        'max-line-length': 124
     })

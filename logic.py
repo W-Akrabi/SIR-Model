@@ -163,23 +163,6 @@ def simulate_one_time_step(people: graph_model.Graph(), infection_radius: int, i
         draw_edge_and_infect(person1, person2, infection_radius, infection_probability, recovery_time, screen)
 
 
-def track_infections_over_time(people: graph_model.Graph(), num_iterations: int, infection_radius: int,
-                               infection_probability: float, recovery_time: int, screen) -> list[int]:
-    """
-    Track the number of infected individuals over the course of the simulation.
-    Args:
-    - people: List of Person objects representing individuals in the simulation.
-    - num_iterations: Number of iterations (time steps) to run the simulation.
-    Returns:
-    - List of integers representing the number of infected individuals at each iteration.
-    """
-    infected_counts = []
-    for _ in range(num_iterations):
-        num_infected = sum(person.infected for person in people)
-        infected_counts.append(num_infected)
-        # Simulate one time step of the epidemic
-        simulate_one_time_step(people, infection_radius, infection_probability, recovery_time, screen)
-    return infected_counts
 
 
 if __name__ == "__main__":
