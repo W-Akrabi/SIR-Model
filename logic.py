@@ -48,8 +48,8 @@ class Person:
         self.y = np.random.randint(0, 600)
         self.radius = 3
         self.color = (255, 255, 255)  # white
-        self.speed_x = np.random.uniform(-2, 2)
-        self.speed_y = np.random.uniform(-2, 2)
+        self.speed_x = np.random.uniform(-1.5, 1.5)
+        self.speed_y = np.random.uniform(-1.5, 1.5)
         self.infected = False
         self.recovered = False
         self.infection_timer = 0
@@ -77,7 +77,7 @@ class Person:
         elif self.recovered:
             color = (0, 255, 0)  # Green
         else:
-            color = (255, 0, 0)  # white
+            color = (0, 0, 255)  # white
         pygame.draw.circle(screen, color, (int(self.x), int(self.y)), self.radius)
 
 
