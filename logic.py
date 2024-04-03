@@ -153,16 +153,6 @@ def draw_edge_and_infect(vertex1: Person, vertex2: Person, model_params: tuple[i
                 vertex2.infection_timer = 0
 
 
-def simulate_one_time_step(people: graph_model.Graph(), infection_radius: int, infection_probability: float,
-                           recovery_time: int, screen) -> None:
-    """
-    Simulates one time step of epidemic spread.
-    :param people: List of Person objects representing individuals in the simulation.
-    """
-    for person1, person2 in people.edges:
-        draw_edge_and_infect(person1, person2, infection_radius, infection_probability, recovery_time, screen)
-
-
 if __name__ == "__main__":
     python_ta.check_all(config={
         'extra-imports': [],  # the names (strs) of imported modules
