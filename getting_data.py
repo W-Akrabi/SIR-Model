@@ -26,5 +26,5 @@ df = pd.read_csv('worldometer_data.csv')
 df['Infection Rate'] = df['TotalCases'] / df['Population']
 df['Mortality Rate'] = df['TotalDeaths'] / df['TotalCases']
 df['Recovery Rate'] = df['TotalRecovered'] / df['TotalCases']
-# print(df[['Country/Region', 'Infection Rate', 'Mortality Rate', 'Recovery Rate']]) uncomment this line to get country
-# uncomment above line to get country stats
+# print(df[['Country/Region', 'Infection Rate', 'Mortality Rate', 'Recovery Rate']])
+# uncomment above line to get country wise stats.
