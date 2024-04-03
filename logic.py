@@ -87,8 +87,6 @@ class Person:
             self.color = (255, 0, 0)  # red
         elif self.recovered:
             self.color = (0, 255, 0)  # Green
-        else:
-            self.color = (0, 0, 255)  # blue
         pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
 
 
