@@ -1,9 +1,11 @@
+"""Preventions"""
 import random
-
+from typing import Any
 import numpy as np
+import python_ta
 
 
-def vaccine_prevention(people, vaccine_effectiveness):
+def vaccine_prevention(people: Any, vaccine_effectiveness: int) -> None:
     """
     Apply vaccine prevention by reducing the infection probability for vaccinated individuals.
     :param people: List of Person objects.
@@ -14,7 +16,7 @@ def vaccine_prevention(people, vaccine_effectiveness):
             person.infected = False  # Reduce infection probability based on vaccine effectiveness
 
 
-def lockdown(people, lockdown_factor):
+def lockdown(people: Any, lockdown_factor: int) -> None:
     """
     Apply lockdown by reducing the movement speed of individuals.
     :param people: List of Person objects.
@@ -25,7 +27,7 @@ def lockdown(people, lockdown_factor):
         person.speed_y *= lockdown_factor
 
 
-def social_distance(people, distance_threshold):
+def social_distance(people: Any, distance_threshold: int) -> None:
     """
     Implement social distancing by increasing the distance between individuals.
     :param people: List of Person objects.
@@ -45,7 +47,7 @@ def social_distance(people, distance_threshold):
                 person2.y += move_y
 
 
-def hygiene(people, hygiene_effectiveness):
+def hygiene(people: Any, hygiene_effectiveness: int) -> None:
     """
     Apply hygiene practices by reducing the infection probability for individuals with good hygiene.
     :param people: List of Person objects.
@@ -56,7 +58,7 @@ def hygiene(people, hygiene_effectiveness):
             person.infected = False  # Reduce infection probability based on hygiene effectiveness
 
 
-def mask_wearing(people, mask_effectiveness):
+def mask_wearing(people: Any, mask_effectiveness: int) -> None:
     """
     Implement mask wearing by reducing the infection probability for individuals wearing masks.
     :param people: List of Person objects.
@@ -67,12 +69,17 @@ def mask_wearing(people, mask_effectiveness):
             person.infected = False  # Reduce infection probability based on mask effectiveness
 
 
-def contact_tracing(people, infected_threshold):
+def contact_tracing(people: Any, infected_threshold: int) -> None:
     """
     Implement contact tracing to identify and isolate individuals who have been in contact with infected individuals.
     :param people: List of Person objects.
     :param infected_threshold: Threshold for identifying infected individuals (0 to 1).
     """
+
+    #
+    # REDUCE THE NESTED EXPRESSIONS YOU CAN ONLY HAVE 3 NESTS MAX
+    #
+
     for person in people:
         if person.infected:
             for contact in person.contacts:
@@ -81,7 +88,7 @@ def contact_tracing(people, infected_threshold):
                     # Implement further actions such as isolation or testing
 
 
-def air_purification(people, ventilation_effectiveness):
+def air_purification(people: Any, ventilation_effectiveness: int) -> None:
     """
     Improve ventilation to reduce the concentration of infectious aerosols in environments.
     :param people: List of Person objects.
@@ -93,7 +100,7 @@ def air_purification(people, ventilation_effectiveness):
             person.infected = False
 
 
-def staggered_work_hours(people, staggered_factor):
+def staggered_work_hours(people: Any, staggered_factor: int) -> None:
     """
     Implement staggered work hours to reduce the number of people present in a shared space at any given time.
     :param people: List of Person objects.
@@ -110,7 +117,7 @@ def staggered_work_hours(people, staggered_factor):
         person.speed_y *= 0.5  # Example: Reduce movement speed by half
 
 
-def remote_work(people, remote_work_factor):
+def remote_work(people: Any, remote_work_factor: int) -> None:
     """
     Encourage remote work to minimize physical interactions in workplaces.
     :param people: List of Person objects.
@@ -122,3 +129,11 @@ def remote_work(people, remote_work_factor):
         person = people[np.random.choice(len(people))]
         person.speed_x *= remote_work_factor  # Reduce movement speed
         person.speed_y *= remote_work_factor
+
+
+if __name__ == "__main__":
+    python_ta.check_all(config={
+        'extra-imports': [],  # the names (strs) of imported modules
+        'allowed-io': [],  # the names (strs) of functions that call print/open/input
+        'max-line-length': 120
+    })

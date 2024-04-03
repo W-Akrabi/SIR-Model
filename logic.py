@@ -30,11 +30,6 @@ import pygame
 import numpy as np
 import graph_model
 
-white = (255, 255, 255)
-black = (0, 0, 0)
-red = (255, 0, 0)
-green = (0, 255, 0)
-
 
 class Person:
     """
@@ -45,7 +40,7 @@ class Person:
         self.x = np.random.randint(0, 800)
         self.y = np.random.randint(0, 600)
         self.radius = 3
-        self.color = white
+        self.color = (255, 255, 255)  # white
         self.speed_x = np.random.uniform(-2, 2)
         self.speed_y = np.random.uniform(-2, 2)
         self.infected = False
@@ -71,11 +66,11 @@ class Person:
         draws the vertexes with its correspomding color in pyagame window
         """
         if self.infected:
-            color = red
+            color = (255, 0, 0)  # red
         elif self.recovered:
-            color = green
+            color = (0, 255, 0)  # Green
         else:
-            color = white
+            color = (255, 0, 0)  # white
         pygame.draw.circle(screen, color, (int(self.x), int(self.y)), self.radius)
 
 
@@ -124,7 +119,7 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int, infection_probability
     """
     distance = calculate_distance(vertex1, vertex2)
     if distance < threshold:  # Adjust the threshold distance as needed
-        pygame.draw.line(screen, white, (int(vertex1.x), int(vertex1.y)),
+        pygame.draw.line(screen, (255, 0, 0), (int(vertex1.x), int(vertex1.y)),
                          (int(vertex2.x), int(vertex2.y)))
         # Check if one is infected and the other is not, then infect based on the infection probability
         infect = np.random.rand()
@@ -150,12 +145,12 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int, infection_probability
                 vertex2.infection_timer = 0
 
 
-def simulate_one_time_step(G, infection_radius, infection_probability, recovery_time, screen):
+def simulate_one_time_step(people, infection_radius, infection_probability, recovery_time, screen):
     """
     Simulates one time step of epidemic spread.
-    :param G: List of Person objects representing individuals in the simulation.
+    :param people: List of Person objects representing individuals in the simulation.
     """
-    for person1, person2 in G.edges:
+    for person1, person2 in people.edges:
         draw_edge_and_infect(person1, person2, infection_radius, infection_probability, recovery_time, screen)
 
 
