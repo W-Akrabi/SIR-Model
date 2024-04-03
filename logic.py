@@ -30,7 +30,7 @@ class Person:
     """
     person class that represents a person in a pandemic
 
-    Instance attributes:
+    Instance Attributes:
 
     Representation Invarients:
     """
