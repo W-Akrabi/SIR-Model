@@ -46,8 +46,8 @@ class Person:
         self.y = np.random.randint(0, 600)
         self.radius = 3
         self.color = white
-        self.speed_x = np.random.uniform(-2, 2)
-        self.speed_y = np.random.uniform(-2, 2)
+        self.speed_x = np.random.uniform(-1.5, 1.5)
+        self.speed_y = np.random.uniform(-1.5, 1.5)
         self.infected = False
         self.recovered = False
         self.infection_timer = 0
