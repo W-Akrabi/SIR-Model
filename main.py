@@ -3,6 +3,7 @@ import pygame
 import logic
 import statistics
 import preventions
+import getting_data
 
 # Initialize Pygame
 pygame.init()
@@ -13,7 +14,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("SIR Model Simulation")
 
 # SIR Parameters
-infection_probability = 0.03
+infection_probability = getting_data.global_infect
 recovery_time = 100
 
 
