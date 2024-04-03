@@ -47,7 +47,6 @@ class Person:
     x: int
     y: int
     radius: int
-    color: tuple
     speed_x: float
     speed_y: float
     infected: bool
@@ -58,7 +57,6 @@ class Person:
         self.x = np.random.randint(0, 800)
         self.y = np.random.randint(0, 600)
         self.radius = 3
-        self.color = (255, 255, 255)  # white
         self.speed_x = np.random.uniform(-1.5, 1.5)
         self.speed_y = np.random.uniform(-1.5, 1.5)
         self.infected = False
@@ -84,10 +82,12 @@ class Person:
         draws the vertexes with its correspomding color in pyagame window
         """
         if self.infected:
-            self.color = (255, 0, 0)  # red
+            color = (255, 0, 0)  # red
         elif self.recovered:
-            self.color = (0, 255, 0)  # Green
-        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
+            color = (0, 255, 0)  # Green
+        else:
+            color = (255, 255, 255)
+        pygame.draw.circle(screen, color, (int(self.x), int(self.y)), self.radius)
 
 
 # Create people
