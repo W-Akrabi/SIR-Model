@@ -30,18 +30,29 @@ class Person:
     """
     person class that represents a person in a pandemic
 
-    Instance Attributes:
+    Instance attributes:
+    - x: int, the x position of the person
+    - y: int, the y position of the person
+    - radius: int, the size of the person
+    - color: tuple(r, g, b), color of the person
+    - speed_x: float, how fast the person moves in the x direction
+    - speed_y: float, how fast the person moves in the y direction
+    - infected: bool, if person is infected
+    - recovered: bool, if the person recovered from infection
+    - infected_timer: int, the amount of time the person is infected for
 
-    Representation Invarients:
+    Representation Invariants:
+    None
     """
     x: int
     y: int
     radius: int
+    color: tuple
     speed_x: float
     speed_y: float
     infected: bool
     recovered: bool
-    infected_timer = int
+    infection_timer: int
 
     def __init__(self) -> None:
         self.x = np.random.randint(0, 800)
@@ -68,7 +79,7 @@ class Person:
             self.speed_y *= -1
 
     # Modify the draw method of the Person class to change the color of infected particles
-    def draw(self, screen) -> None:
+    def draw(self, screen: pygame.display.set_mode()) -> None:
         """
         draws the vertexes with its correspomding color in pyagame window
         """
@@ -86,7 +97,7 @@ def community(num_persons: int) -> graph_model.Graph():
     """
     creates a community of people based on a graph
     :param num_persons:
-    :return:
+    :return: graph_model.Graph()
     """
     people = [Person() for _ in range(num_persons)]
 
@@ -94,18 +105,18 @@ def community(num_persons: int) -> graph_model.Graph():
     infected_particle.infected = True
 
     # Create graph to represent connections between people
-    G = graph_model.Graph()
+    g = graph_model.Graph()
 
     # Add people as nodes to the graph
     for particle in people:
-        G.add_node(particle)
+        g.add_node(particle)
 
     # Add edges between people based on distance
     for i, person1 in enumerate(people):
         for person2 in people[i + 1:]:  # Only iterate over people that come after person1
-            G.add_edge(person1, person2)
+            g.add_edge(person1, person2)
 
-    return G
+    return g
 
 
 def calculate_distance(p1: Person, p2: Person) -> float:
@@ -118,7 +129,8 @@ def calculate_distance(p1: Person, p2: Person) -> float:
     return np.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
 
 
-def draw_edge_and_infect(vertex1: Person, vertex2: Person, model_params: tuple[int, float, int], screen) -> None:
+def draw_edge_and_infect(vertex1: Person, vertex2: Person, model_params: tuple[int, float, int],
+                         screen: pygame.display.set_mode()) -> None:
     """
     draws the edge between two people under a certain distance
     :param vertex1:
