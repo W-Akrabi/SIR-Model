@@ -5,3 +5,5 @@ pygame==2.5.2
 pandas
 # For calculations
 numpy
+# For checking code
+pyta
