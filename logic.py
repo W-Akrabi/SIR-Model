@@ -22,15 +22,28 @@ Note: This file relies on the 'graph_model' module for graph-related functionali
 """
 import pygame
 import numpy as np
+import python_ta
 import graph_model
 
 
 class Person:
     """
     person class that represents a person in a pandemic
-    """
 
-    def __init__(self):
+    Instance attributes:
+
+    Representation Invarients:
+    """
+    x: int
+    y: int
+    radius: int
+    speed_x: float
+    speed_y: float
+    infected: bool
+    recovered: bool
+    infected_timer = int
+
+    def __init__(self) -> None:
         self.x = np.random.randint(0, 800)
         self.y = np.random.randint(0, 600)
         self.radius = 3
@@ -69,7 +82,7 @@ class Person:
 
 
 # Create people
-def community(num_persons) -> graph_model.Graph():
+def community(num_persons: int) -> graph_model.Graph():
     """
     creates a community of people based on a graph
     :param num_persons:
@@ -95,7 +108,7 @@ def community(num_persons) -> graph_model.Graph():
     return G
 
 
-def calculate_distance(p1, p2):
+def calculate_distance(p1: Person, p2: Person) -> float:
     """
     calculates the distance between two vertexes
     :param p1:
@@ -105,7 +118,8 @@ def calculate_distance(p1, p2):
     return np.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
 
 
-def draw_edge_and_infect(vertex1, vertex2, threshold: int, infection_probability, recovery_time, screen):
+def draw_edge_and_infect(vertex1: Person, vertex2: Person, threshold: int, infection_probability: float,
+                         recovery_time: int, screen) -> None:
     """
     draws the edge between two people under a certain distance
     :param vertex1:
@@ -139,7 +153,8 @@ def draw_edge_and_infect(vertex1, vertex2, threshold: int, infection_probability
                 vertex2.infection_timer = 0
 
 
-def simulate_one_time_step(people, infection_radius, infection_probability, recovery_time, screen):
+def simulate_one_time_step(people: graph_model.Graph(), infection_radius: int, infection_probability: float,
+                           recovery_time: int, screen) -> None:
     """
     Simulates one time step of epidemic spread.
     :param people: List of Person objects representing individuals in the simulation.
@@ -148,7 +163,8 @@ def simulate_one_time_step(people, infection_radius, infection_probability, reco
         draw_edge_and_infect(person1, person2, infection_radius, infection_probability, recovery_time, screen)
 
 
-def track_infections_over_time(people, num_iterations, infection_radius, infection_probability, recovery_time, screen):
+def track_infections_over_time(people: graph_model.Graph(), num_iterations: int, infection_radius: int,
+                               infection_probability: float, recovery_time: int, screen) -> list[int]:
     """
     Track the number of infected individuals over the course of the simulation.
     Args:
@@ -164,3 +180,11 @@ def track_infections_over_time(people, num_iterations, infection_radius, infecti
         # Simulate one time step of the epidemic
         simulate_one_time_step(people, infection_radius, infection_probability, recovery_time, screen)
     return infected_counts
+
+
+if __name__ == "__main__":
+    python_ta.check_all(config={
+        'extra-imports': [],  # the names (strs) of imported modules
+        'allowed-io': [],  # the names (strs) of functions that call print/open/input
+        'max-line-length': 120
+    })

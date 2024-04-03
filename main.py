@@ -1,8 +1,8 @@
 """main"""
 import statistics
-import graph_model
 import python_ta
 import pygame
+import graph_model
 import logic
 import preventions
 import getting_data
