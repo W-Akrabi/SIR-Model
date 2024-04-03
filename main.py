@@ -1,7 +1,7 @@
 """main"""
 from typing import Any
-
 import statistics
+import python_ta
 import pygame
 import logic
 import preventions
@@ -152,8 +152,8 @@ if __name__ == "__main__":
     # Plot the infection statistics over time using Plotly
     statistics.plot_sir_curve(infected_counts, recovered_counts, susceptible_counts)
 
-    import python_ta
-
     python_ta.check_all(config={
+        'extra-imports': [],  # the names (strs) of imported modules
+        'allowed-io': [],  # the names (strs) of functions that call print/open/input
         'max-line-length': 120
     })
