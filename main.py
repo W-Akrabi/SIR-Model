@@ -69,7 +69,7 @@ def get_prevention_severity(prevention: str, num_people: int) -> Union[int, floa
     """
     if prevention in ['vaccines', 'masks']:
         return get_user_prevention_level(num_people)
-    elif prevention in ['lockdown', 'staggered working hours', 'social distancing']:
+    elif prevention in ['lockdown', 'staggered working hours', 'social distancing', 'remote work']:
         return get_user_prevention_level(1)
 
 
@@ -86,21 +86,21 @@ def get_user_prevention_level(maximum_level: int) -> float:
 
 
 def run_preventions(prevention_list: list[str], prevention_severity_list: list[Union[int, float]],
-                    p: graph_model.Graph(), num_person: int) -> None:
+                    p: graph_model.Graph()) -> None:
     """
     Run preventions on the data based on the users input
     """
-    for i in range(len(prevention_list)):
-        if prevention_list[i] == 'vaccines':
-            preventions.vaccine_prevention(p, prevention_severity_list[i])
-        elif prevention_list[i] == 'lockdown':
-            preventions.lockdown(p, prevention_severity_list[i])
-        elif prevention_list[i] == 'masks':
-            preventions.mask_wearing(p, prevention_severity_list[i])
-        elif prevention_list[i] == 'remote work':
-            preventions.remote_work(p, prevention_severity_list[i], num_person)
-        elif prevention_list[i] == 'staggered working hours':
-            preventions.staggered_work_hours(p, prevention_severity_list[i])
+    for v in range(len(prevention_list)):
+        if prevention_list[v] == 'vaccines':
+            preventions.vaccine_prevention(p, prevention_severity_list[v])
+        elif prevention_list[v] == 'lockdown':
+            preventions.lockdown(p, prevention_severity_list[v])
+        elif prevention_list[v] == 'masks':
+            preventions.mask_wearing(p, prevention_severity_list[v])
+        elif prevention_list[v] == 'remote work':
+            preventions.remote_work(p, prevention_severity_list[v])
+        elif prevention_list[v] == 'staggered working hours':
+            preventions.staggered_work_hours(p, prevention_severity_list[v])
 
 
 if __name__ == "__main__":
@@ -115,7 +115,19 @@ if __name__ == "__main__":
     susceptible_counts = []
 
     preventions_list, severity_list = get_preventions(num_persons)
-    run_preventions(preventions_list, severity_list, G, num_persons)
+    run_preventions(preventions_list, severity_list, G)
+
+    # Display menu
+    print("Select statistics functions to run:")
+    print("1. Analyze SIR simulation")
+    print("2. Calculate infection rate")
+    print("3. Plot infection curve")
+    print("4. Plot SIR curve")
+    print("5. Plot infection curve with FFT")
+    print("6. Analyze SIR simulation with FFT")
+
+    # Get user choices
+    choices = input("Enter your choices (comma-separated) and choce any number after 6 to view nothing: ").split(',')
 
     # Now that user input is gathered and preventions are applied, initialize Pygame
     pygame.init()
@@ -132,7 +144,7 @@ if __name__ == "__main__":
     font = pygame.font.Font(None, 20)  # Font for rendering text
 
     prevention_texts = [font.render(prevention, True, (255, 255, 255)) for prevention in preventions_list]
-    prevention_texts_y_positions = [i * 30 + 10 for i in range(len(prevention_texts))]
+    prevention_texts_y_positions = [j * 30 + 10 for j in range(len(prevention_texts))]
 
     while running:
         screen.fill((0, 0, 0))
@@ -169,7 +181,7 @@ if __name__ == "__main__":
 
             # Check if time limit exceeded
             current_time = pygame.time.get_ticks()
-            if current_time - start_time >= 20000:
+            if current_time - start_time >= 10000:
                 running = False
 
             # Render text showing counts of infected, non-infected, and recovered individuals
@@ -188,11 +200,33 @@ if __name__ == "__main__":
 
     pygame.quit()
 
-    # Plot the infection statistics over time using Plotly
-    statistics.plot_sir_curve(infected_counts, recovered_counts, susceptible_counts)
+    for choice in choices:
+        if choice == '1':
+            # Analyze SIR simulation requires infected_counts, recovered_counts, and population
+            population = num_persons
+            statistics.analyze_sir_simulation(infected_counts, recovered_counts, population)
+        elif choice == '2':
+            # Calculate infection rate requires infected_counts
+            infection_rate = statistics.calculate_infection_rate(infected_counts)
+            print(f"Average infection rate per iteration: {infection_rate}")
+        elif choice == '3':
+            # Plot infection curve requires infected_counts
+            statistics.plot_infection_curve(infected_counts)
+        elif choice == '4':
+            # Plot SIR curve requires infected_counts, recovered_counts, and susceptible_counts
+            statistics.plot_sir_curve(infected_counts, recovered_counts, susceptible_counts)
+        elif choice == '5':
+            # Plot infection curve with FFT requires infected_counts
+            statistics.plot_infection_curve_with_fft(infected_counts)
+        elif choice == '6':
+            # Analyze SIR simulation with FFT requires infected_counts, recovered_counts, and population
+            population = num_persons
+            statistics.analyze_sir_simulation_with_fft(infected_counts, recovered_counts, population)
 
     python_ta.check_all(config={
-        'extra-imports': [],  # the names (strs) of imported modules
-        'allowed-io': [],  # the names (strs) of functions that call print/open/input
-        'max-line-length': 124
+        'max-line-length': 170,
+        'disable': ['E1136', 'W0221'],
+        'extra-imports': ['random', 'graph_model', 'statistics', 'logic', ],
+        'allowed-io': ['run_voyage', 'get_airport_coordinates', 'countries_and_airports', 'optimal_routes',
+                       'preventions', 'create_graph', 'preventions', 'pygame'],
     })

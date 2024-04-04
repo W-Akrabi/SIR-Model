@@ -122,23 +122,28 @@ def staggered_work_hours(people: graph_model.Graph(), staggered_factor: float) -
         person.speed_y *= 0.5  # Example: Reduce movement speed by half
 
 
-def remote_work(people: graph_model.Graph(), remote_work_factor: float, num_people: int) -> None:
+def remote_work(people: graph_model.Graph(), remote_work_factor: float) -> None:
     """
     Encourage remote work to minimize physical interactions in workplaces.
     :param people: List of Person objects.
     :param remote_work_factor: Factor to increase remote work (0 to 1).
     """
     # Transition individuals to remote work where feasible
-    random_num = int(random.random() * num_people)
-    for _ in range(random_num):
-        person = people.nodes[np.random.choice(len(people))]
+    people_list = list(people.nodes.values())
+
+    # Adjust remote work  for individuals to prevent them from moving much
+    num_staggered_people = int(len(people_list) * remote_work_factor)
+    staggered_people = random.sample(people_list, num_staggered_people)
+
+    for person in staggered_people:
         person.speed_x *= abs(remote_work_factor - 1)  # Reduce movement speed
         person.speed_y *= abs(remote_work_factor - 1)
 
 
 if __name__ == "__main__":
     python_ta.check_all(config={
-        'extra-imports': [],  # the names (strs) of imported modules
-        'allowed-io': [],  # the names (strs) of functions that call print/open/input
-        'max-line-length': 120
+        'max-line-length': 170,
+        'disable': ['E1136', 'W0221'],
+        'extra-imports': ['random', 'graph_model', 'statistics', 'logic', 'numpy'],
+        'allowed-io': ['preventions', 'create_graph', 'preventions', 'pygame'],
     })

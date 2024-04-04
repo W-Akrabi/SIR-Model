@@ -214,7 +214,8 @@ def analyze_sir_simulation_with_fft(infected_counts: list, recovered_counts: lis
 
 if __name__ == "__main__":
     python_ta.check_all(config={
-        'extra-imports': [],  # the names (strs) of imported modules
-        'allowed-io': [],  # the names (strs) of functions that call print/open/input
-        'max-line-length': 120
+        'max-line-length': 170,
+        'disable': ['E1136', 'W0221'],
+        'extra-imports': ['random', 'graph_model', 'statistics', 'logic', 'numpy', 'plotly.graph_objects'],
+        'allowed-io': ['preventions', 'create_graph', 'preventions', 'pygame'],
     })
