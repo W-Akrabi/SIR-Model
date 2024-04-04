@@ -5,12 +5,11 @@ import pygame
 import graph_model
 import logic
 import preventions
-import getting_data
 
 
 def get_user_input() -> tuple:
     """
-    Get user input for variables that user's are allowed to control
+    Get user input for variables that users are allowed to control
     Preconditions:
     - 0 <= num_persons <= 75
     - 0 <= num_persons <= 20
@@ -30,7 +29,7 @@ def get_user_input() -> tuple:
 
 def get_preventions() -> list[str]:
     """
-    Get user input for variables that user's are allowed to control
+    Get user input for variables that users are allowed to control
     Preconditions:
     - 0 >= num_persons >= 75
     - 0 >= num_persons >= 20

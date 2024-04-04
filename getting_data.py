@@ -5,13 +5,13 @@ import pandas as pd
 def calculate_global_rates(csv_file) -> tuple:
     """Made a function to read from all the data in the file and give the global infection, mortality and recovery rate
        of all countries in dataset"""
-    df = pd.read_csv(csv_file)
-    global_total_cases = df['TotalCases'].sum()
-    global_population = df['Population'].sum()
+    reader = pd.read_csv(csv_file)
+    global_total_cases = reader['TotalCases'].sum()
+    global_population = reader['Population'].sum()
     global_infection_rate = global_total_cases / global_population
-    global_total_deaths = df['TotalDeaths'].sum()
+    global_total_deaths = reader['TotalDeaths'].sum()
     global_mortality_rate = global_total_deaths / global_total_cases
-    global_total_recovered = df['TotalRecovered'].sum()
+    global_total_recovered = reader['TotalRecovered'].sum()
     global_recovery_rate = global_total_recovered / global_total_cases
 
     return global_infection_rate, global_mortality_rate, global_recovery_rate

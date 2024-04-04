@@ -26,6 +26,7 @@ import python_ta
 import graph_model
 import getting_data
 
+
 class Person:
     """
     person class that represents a person in a pandemic
