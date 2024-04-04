@@ -106,8 +106,8 @@ def community(num_persons: int) -> graph_model.Graph():
     g = graph_model.Graph()
 
     # Add people as nodes to the graph
-    for particle in people:
-        g.add_node(particle)
+    for num in range(len(people)):
+        g.add_node(num, people[num])
 
     # Add edges between people based on distance
     for i, person1 in enumerate(people):

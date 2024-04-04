@@ -1,6 +1,5 @@
 """Preventions"""
 import random
-from typing import Union
 
 import numpy as np
 import python_ta
@@ -36,7 +35,7 @@ def lockdown(people: graph_model.Graph(), lockdown_factor: float) -> None:
     :param people: List of Person objects.
     :param lockdown_factor: Factor to reduce movement speed (0 to 1).
     """
-    for person in people:
+    for person in people.nodes.values():
         person.speed_x *= abs(lockdown_factor - 1)  # Reduce movement speed
         person.speed_y *= abs(lockdown_factor - 1)
 
@@ -71,19 +70,17 @@ def mask_wearing(people: graph_model.Graph(), people_with_masks: float) -> None:
     :param people_with_masks: Effectiveness of masks (0 to 1).
     """
     # Calculate the number of vaccinated people
-    num_vaccinated = int(people_with_masks * len(people))
+    num_vaccinated = int(people_with_masks * len(people.nodes))
 
     # Shuffle the keys of the dictionary
-    keys = list(people.nodes.keys())
+    keys = list(people.nodes.values())
     random.shuffle(keys)
 
     # Select the first num_vaccinated keys
     vaccinated_people = keys[:num_vaccinated]
 
     # Update infection probability for vaccinated individuals
-    for person_key in vaccinated_people:
-        person = people.nodes[person_key]
-        # Reduce the person's infection probability based on vaccine effectiveness
+    for person in vaccinated_people:
         person.infection_probability *= 0.4  # Assuming 40% reduction in infection probability from canada.gov
 
 

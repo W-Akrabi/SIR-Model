@@ -147,7 +147,7 @@ if __name__ == "__main__":
             elif 'infection tracing' in preventions_list:
                 preventions.infection_tracing(G, 0.5)
             # Move people
-            for person in G:
+            for person in G.nodes.values():
                 person.move(width, height)
                 person.draw(screen)
 
@@ -156,8 +156,8 @@ if __name__ == "__main__":
                 logic.draw_edge_and_infect(person1, person2, (infection_radius, recovery_time), screen)
 
             # Track infection statistics
-            num_infected = sum(1 for p in G if p.infected)
-            num_recovered = sum(1 for p in G if p.recovered)
+            num_infected = sum(1 for p in G.nodes.values() if p.infected)
+            num_recovered = sum(1 for p in G.nodes.values() if p.recovered)
             num_susceptible = num_persons - num_infected - num_recovered
 
             infected_counts.append(num_infected)

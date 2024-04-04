@@ -28,7 +28,7 @@ import python_ta
 
 class Graph:
     """A class for representing an undirected graph."""
-    nodes: dict
+    nodes: dict[int, Any]
     edges: dict
 
     def __init__(self) -> None:
@@ -36,18 +36,18 @@ class Graph:
         self.nodes = {}  # Dictionary to store nodes and their attributes
         self.edges = {}  # Dictionary to store edges and their attributes
 
-    def add_node(self, node: Any, **attr: Any) -> None:
+    def add_node(self, num: Any, attr: Any) -> None:
         """Add a node to the graph.
 
         Parameters:
-            node: hashable
-                The node to add.
+            num: hashable
+                The num to add.
             attr: dict, optional
                 Node attributes.
 
         """
-        if node not in self.nodes:
-            self.nodes[node] = attr
+        if num not in self.nodes:
+            self.nodes[num] = attr
 
     def remove_node(self, node: Any) -> None:
         """Remove a node from the graph.
