@@ -67,7 +67,7 @@ def get_prevention_severity(prevention: str, num_people: int) -> Union[int, floa
     :param num_people: Number of people the user picked in their simulation
     :return:
     """
-    if prevention == 'vaccines' or prevention == 'masks':
+    if prevention in ['vaccines', 'masks']:
         return get_user_prevention_level(num_people)
     elif prevention in ['lockdown', 'staggered working hours', 'social distancing']:
         return get_user_prevention_level(1)

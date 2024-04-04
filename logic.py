@@ -63,7 +63,7 @@ class Person:
         self.infection_probability = getting_data.global_infect * 10
         self.infection_timer = 0
 
-    def move(self, width, height) -> None:
+    def move(self, width: int, height: int) -> None:
         """
         moves the vertex in a direction
         """
@@ -77,7 +77,7 @@ class Person:
             self.speed_y *= -1
 
     # Modify the draw method of the Person class to change the color of infected particles
-    def draw(self, screen) -> None:
+    def draw(self, screen: pygame.Surface) -> None:
         """
         draws the vertexes with its correspomding color in pyagame window
         """
@@ -128,7 +128,7 @@ def calculate_distance(p1: Person, p2: Person) -> float:
 
 
 def draw_edge_and_infect(vertex1: Person, vertex2: Person, model_params: tuple[int, int],
-                         screen) -> None:
+                         screen: pygame.Surface) -> None:
     """
     draws the edge between two people under a certain distance
     :param vertex1:
