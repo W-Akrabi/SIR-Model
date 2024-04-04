@@ -104,8 +104,13 @@ def run_preventions(prevention_list: list[str], prevention_severity_list: list[U
 
 
 if __name__ == "__main__":
-    retarded_autistic_variable = 0.5
     recovery_time = 100
+
+    pygame.init()
+    # Screen dimensions
+    width, height = 800, 600
+    screen = pygame.display.set_mode((width, height))
+    pygame.display.set_caption("SIR Model Simulation")
 
     num_persons, infection_radius = get_user_input()
     G = logic.community(num_persons)
@@ -119,11 +124,6 @@ if __name__ == "__main__":
     run_preventions(preventions_list, severity_list, G, num_persons)
 
     # Now that user input is gathered and preventions are applied, initialize Pygame
-    pygame.init()
-    # Screen dimensions
-    width, height = 800, 600
-    screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption("SIR Model Simulation")
 
     # Main loop
     running = True
