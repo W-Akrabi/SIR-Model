@@ -33,8 +33,6 @@ class Person:
     Instance attributes:
     - x: int, the x position of the person
     - y: int, the y position of the person
-    - radius: int, the size of the person
-    - color: tuple(r, g, b), color of the person
     - speed_x: float, how fast the person moves in the x direction
     - speed_y: float, how fast the person moves in the y direction
     - infected: bool, if person is infected
@@ -46,7 +44,6 @@ class Person:
     """
     x: int
     y: int
-    radius: int
     speed_x: float
     speed_y: float
     infected: bool
@@ -56,14 +53,13 @@ class Person:
     def __init__(self) -> None:
         self.x = np.random.randint(0, 800)
         self.y = np.random.randint(0, 600)
-        self.radius = 3
         self.speed_x = np.random.uniform(-1.5, 1.5)
         self.speed_y = np.random.uniform(-1.5, 1.5)
         self.infected = False
         self.recovered = False
         self.infection_timer = 0
 
-    def move(self) -> None:
+    def move(self, width, height) -> None:
         """
         moves the vertex in a direction
         """
@@ -71,9 +67,9 @@ class Person:
         self.y += self.speed_y
 
         # Bounce off edges
-        if self.x <= 0 or self.x >= 800:
+        if self.x <= 0 or self.x >= width:
             self.speed_x *= -1
-        if self.y <= 0 or self.y >= 600:
+        if self.y <= 0 or self.y >= height:
             self.speed_y *= -1
 
     # Modify the draw method of the Person class to change the color of infected particles
@@ -87,7 +83,7 @@ class Person:
             color = (0, 255, 0)  # Green
         else:
             color = (255, 255, 255)
-        pygame.draw.circle(screen, color, (int(self.x), int(self.y)), self.radius)
+        pygame.draw.circle(screen, color, (int(self.x), int(self.y)), 3)
 
 
 # Create people

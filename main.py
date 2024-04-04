@@ -36,10 +36,10 @@ def get_preventions() -> list[str]:
     - 0 >= num_persons >= 20
     """
     preventions_so_far = []
-    prevention_options = ('Preventions: \n-vaccines \n-lockdown \n-social distancing \n-masks, \n-hygiene '
-                          '\n-contact tracing \n-air purification \n-remote work \n-staggered working hours')
-    valid_answers = ['vaccines', 'lockdown', 'social distancing', 'masks', 'hygiene',
-                     'contact tracing', 'air purification', 'remote work', 'staggered working hours']
+    prevention_options = ('Preventions: \n-vaccines \n-lockdown \n-social distancing \n-masks '
+                          '\n-infection tracing \n-remote work \n-staggered working hours')
+    valid_answers = ['vaccines', 'lockdown', 'social distancing', 'masks',
+                     'infection tracing', 'remote work', 'staggered working hours']
 
     print('\nSelect up to three preventions. Type "Done" to finish\n')
 
@@ -57,7 +57,7 @@ def get_preventions() -> list[str]:
     return preventions_so_far
 
 
-def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_variable: int) -> None:
+def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_variable: float) -> None:
     """
     Run preventions on the data based on the users input
     """
@@ -66,24 +66,16 @@ def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_var
             preventions.vaccine_prevention(p, dumb_variable)
         elif prevention == 'lockdown':
             preventions.lockdown(p, dumb_variable)
-        elif prevention == 'social distancing':
-            preventions.social_distance(p, dumb_variable)
         elif prevention == 'masks':
             preventions.mask_wearing(p, dumb_variable)
-        elif prevention == 'hygiene':
-            preventions.hygiene(p, dumb_variable)
-        elif prevention == 'contact tracing':
-            preventions.contact_tracing(p, dumb_variable)
-        elif prevention == 'air purification':
-            preventions.air_purification(p, dumb_variable)
         elif prevention == 'remote work':
-            preventions.remote_work(p, dumb_variable)
+            preventions.remote_work(p, dumb_variable, num_persons)
         elif prevention == 'staggered working hours':
             preventions.staggered_work_hours(p, dumb_variable)
 
 
 if __name__ == "__main__":
-    retarded_autistic_variable = 2
+    retarded_autistic_variable = 0.5
     # SIR Parameters
     infection_probability = getting_data.global_infect * 10
     recovery_time = 100
@@ -123,9 +115,13 @@ if __name__ == "__main__":
                     paused = not paused
 
         if not paused:
+            if 'social distancing' in preventions_list:
+                preventions.social_distance(G, 20, width, height)
+            elif 'infection tracing' in preventions_list:
+                preventions.infection_tracing(G, 0.5)
             # Move people
             for person in G:
-                person.move()
+                person.move(width, height)
                 person.draw(screen)
 
             # Infect people
@@ -154,7 +150,6 @@ if __name__ == "__main__":
 
     # Plot the infection statistics over time using Plotly
     statistics.plot_sir_curve(infected_counts, recovered_counts, susceptible_counts)
-    statistics.analyze_sir_simulation(infected_counts, recovered_counts, num_persons)
 
     python_ta.check_all(config={
         'extra-imports': [],  # the names (strs) of imported modules
