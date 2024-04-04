@@ -109,7 +109,7 @@ def staggered_work_hours(people: graph_model.Graph(), staggered_factor: float) -
     :param people: List of Person objects.
     :param staggered_factor: Factor to adjust work hours (0 to 1).
     """
-    people_list = list(people)
+    people_list = list(people.nodes.values())
 
     # Adjust work hours for individuals to stagger their arrival and departure times
     total_people = len(people_list)
@@ -131,7 +131,7 @@ def remote_work(people: graph_model.Graph(), remote_work_factor: float, num_peop
     # Transition individuals to remote work where feasible
     random_num = int(random.random() * num_people)
     for _ in range(random_num):
-        person = people[np.random.choice(len(people))]
+        person = people.nodes[np.random.choice(len(people))]
         person.speed_x *= abs(remote_work_factor - 1)  # Reduce movement speed
         person.speed_y *= abs(remote_work_factor - 1)
 

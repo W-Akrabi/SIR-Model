@@ -2,7 +2,7 @@
 import pandas as pd
 
 
-def calculate_global_rates(csv_file) -> tuple:
+def calculate_global_rates(csv_file) -> tuple[float, float, float]:
     """Made a function to read from all the data in the file and give the global infection, mortality and recovery rate
        of all countries in dataset"""
     reader = pd.read_csv(csv_file)
@@ -18,7 +18,7 @@ def calculate_global_rates(csv_file) -> tuple:
 
 
 global_infect, global_mortality, global_recovery = calculate_global_rates('worldometer_data.csv')
-print("Global Infection Rate:", global_infect)
+'''print("Global Infection Rate:", global_infect)
 print("Global Recovery Rate:", global_recovery)
 print("Global Mortality Rate:", global_mortality)
 # Country wise Data
@@ -27,4 +27,4 @@ df['Infection Rate'] = df['TotalCases'] / df['Population']
 df['Mortality Rate'] = df['TotalDeaths'] / df['TotalCases']
 df['Recovery Rate'] = df['TotalRecovered'] / df['TotalCases']
 # print(df[['Country/Region', 'Infection Rate', 'Mortality Rate', 'Recovery Rate']])
-# uncomment above line to get country wise stats.
+# uncomment above line to get country wise stats.'''
