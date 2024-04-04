@@ -18,7 +18,7 @@ def calculate_global_rates(csv_file) -> tuple[float, float, float]:
 
 
 global_infect, global_mortality, global_recovery = calculate_global_rates('worldometer_data.csv')
-'''print("Global Infection Rate:", global_infect)
+print("Global Infection Rate:", global_infect)
 print("Global Recovery Rate:", global_recovery)
 print("Global Mortality Rate:", global_mortality)
 # Country wise Data
