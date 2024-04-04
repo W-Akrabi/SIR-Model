@@ -69,7 +69,7 @@ def get_prevention_severity(prevention: str, num_people: int) -> Union[int, floa
     """
     if prevention == 'vaccines' or prevention == 'masks':
         return get_user_prevention_level(num_people)
-    elif prevention == 'lockdown' or prevention == 'remote work' or prevention == 'staggered working hours':
+    elif prevention in ['lockdown', 'staggered working hours', 'social distancing']:
         return get_user_prevention_level(1)
 
 
@@ -129,6 +129,10 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
     start_time = pygame.time.get_ticks()
     paused = False
+    font = pygame.font.Font(None, 20)  # Font for rendering text
+
+    prevention_texts = [font.render(prevention, True, (255, 255, 255)) for prevention in preventions_list]
+    prevention_texts_y_positions = [i * 30 + 10 for i in range(len(prevention_texts))]
 
     while running:
         screen.fill((0, 0, 0))
@@ -167,6 +171,17 @@ if __name__ == "__main__":
             current_time = pygame.time.get_ticks()
             if current_time - start_time >= 20000:
                 running = False
+
+            # Render text showing counts of infected, non-infected, and recovered individuals
+            infected_text = font.render(f'Infected: {num_infected}', True, (255, 0, 0))
+            recovered_text = font.render(f'Recovered: {num_recovered}', True, (0, 255, 0))
+            susceptible_text = font.render(f'Susceptible: {num_susceptible}', True, (137, 207, 240))
+            screen.blit(infected_text, (10, 10))
+            screen.blit(recovered_text, (10, 50))
+            screen.blit(susceptible_text, (10, 90))
+            # Render text for selected preventions
+            for i, text in enumerate(prevention_texts):
+                screen.blit(text, (width - 200, prevention_texts_y_positions[i]))
 
             clock.tick(300)
             pygame.display.flip()  # Optional delay for smoother animation
