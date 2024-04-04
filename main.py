@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
         if not paused:
             if 'social distancing' in preventions_list:
-                preventions.social_distance(G, 20, width, height)
+                preventions.social_distance(G, 25, width, height)
             elif 'infection tracing' in preventions_list:
                 preventions.infection_tracing(G, 0.5)
             # Move people
@@ -165,7 +165,7 @@ if __name__ == "__main__":
 
             # Check if time limit exceeded
             current_time = pygame.time.get_ticks()
-            if current_time - start_time >= 10000:
+            if current_time - start_time >= 20000:
                 running = False
 
             clock.tick(300)
