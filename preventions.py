@@ -1,5 +1,7 @@
 """Preventions"""
 import random
+from typing import Union
+
 import numpy as np
 import python_ta
 import graph_model

@@ -1,4 +1,6 @@
 """main"""
+from typing import Union
+
 import statistics
 import python_ta
 import pygame
@@ -27,7 +29,7 @@ def get_user_input() -> tuple:
     return num_people, infect_radius
 
 
-def get_preventions() -> list[str]:
+def get_preventions(num_people: int) -> tuple[list[str], list[int]]:
     """
     Get user input for variables that users are allowed to control
     Preconditions:
@@ -35,6 +37,7 @@ def get_preventions() -> list[str]:
     - 0 >= num_persons >= 20
     """
     preventions_so_far = []
+    severity_so_far = []
     prevention_options = ('Preventions: \n-vaccines \n-lockdown \n-social distancing \n-masks '
                           '\n-infection tracing \n-remote work \n-staggered working hours')
     valid_answers = ['vaccines', 'lockdown', 'social distancing', 'masks',
@@ -48,29 +51,56 @@ def get_preventions() -> list[str]:
             break
         elif answer in valid_answers and answer not in preventions_so_far:
             preventions_so_far.append(answer)
+            severity_so_far.append(get_prevention_severity(answer, num_people))
         elif answer not in valid_answers:
             print("Invalid input. Please choose again. Type 'Done' to finish")
         else:
             print("Already Chosen. Please choose a different prevention. Type 'Done' to finish")
 
-    return preventions_so_far
+    return preventions_so_far, severity_so_far
 
 
-def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_variable: float, num_person: int) -> None:
+def get_prevention_severity(prevention: str, num_people: int) -> Union[int, float]:
+    """
+
+    :param prevention: specific prevention the user picked
+    :param num_people: Number of people the user picked in their simulation
+    :return:
+    """
+    if prevention == 'vaccines' or prevention == 'masks':
+        return get_user_prevention_level(num_people)
+    elif prevention == 'lockdown' or prevention == 'remote work' or prevention == 'staggered working hours':
+        return get_user_prevention_level(1)
+
+
+def get_user_prevention_level(maximum_level: int) -> float:
+    """
+    Keep asking the user for input prevention level value until it is a valid input
+    :param maximum_level: Maximum value the user can pick
+    :return: float
+    """
+    answer = float(input(f'Pick a prevention severity in (0, {maximum_level}]').lower().strip())
+    while not 0 < answer <= maximum_level:
+        answer = int(input(f'Pick a prevention severity in (0, {maximum_level}]').lower().strip())
+    return answer
+
+
+def run_preventions(prevention_list: list[str], prevention_severity_list: list[Union[int, float]],
+                    p: graph_model.Graph(), num_person: int) -> None:
     """
     Run preventions on the data based on the users input
     """
-    for prevention in prevention_list:
-        if prevention == 'vaccines':
-            preventions.vaccine_prevention(p, dumb_variable)
-        elif prevention == 'lockdown':
-            preventions.lockdown(p, dumb_variable)
-        elif prevention == 'masks':
-            preventions.mask_wearing(p, dumb_variable)
-        elif prevention == 'remote work':
-            preventions.remote_work(p, dumb_variable, num_person)
-        elif prevention == 'staggered working hours':
-            preventions.staggered_work_hours(p, dumb_variable)
+    for i in range(len(prevention_list)):
+        if prevention_list[i] == 'vaccines':
+            preventions.vaccine_prevention(p, prevention_severity_list[i])
+        elif prevention_list[i] == 'lockdown':
+            preventions.lockdown(p, prevention_severity_list[i])
+        elif prevention_list[i] == 'masks':
+            preventions.mask_wearing(p, prevention_severity_list[i])
+        elif prevention_list[i] == 'remote work':
+            preventions.remote_work(p, prevention_severity_list[i], num_person)
+        elif prevention_list[i] == 'staggered working hours':
+            preventions.staggered_work_hours(p, prevention_severity_list[i])
 
 
 if __name__ == "__main__":
@@ -85,8 +115,8 @@ if __name__ == "__main__":
     recovered_counts = []
     susceptible_counts = []
 
-    preventions_list = get_preventions()
-    run_preventions(preventions_list, G, retarded_autistic_variable, num_persons)
+    preventions_list, severity_list = get_preventions(num_persons)
+    run_preventions(preventions_list, severity_list, G, num_persons)
 
     # Now that user input is gathered and preventions are applied, initialize Pygame
     pygame.init()
