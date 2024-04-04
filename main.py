@@ -57,7 +57,7 @@ def get_preventions() -> list[str]:
     return preventions_so_far
 
 
-def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_variable: float) -> None:
+def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_variable: float, num_person: int) -> None:
     """
     Run preventions on the data based on the users input
     """
@@ -69,15 +69,13 @@ def run_preventions(prevention_list: list[str], p: graph_model.Graph(), dumb_var
         elif prevention == 'masks':
             preventions.mask_wearing(p, dumb_variable)
         elif prevention == 'remote work':
-            preventions.remote_work(p, dumb_variable, num_persons)
+            preventions.remote_work(p, dumb_variable, num_person)
         elif prevention == 'staggered working hours':
             preventions.staggered_work_hours(p, dumb_variable)
 
 
 if __name__ == "__main__":
     retarded_autistic_variable = 0.5
-    # SIR Parameters
-    infection_probability = getting_data.global_infect * 10
     recovery_time = 100
 
     num_persons, infection_radius = get_user_input()
@@ -89,7 +87,7 @@ if __name__ == "__main__":
     susceptible_counts = []
 
     preventions_list = get_preventions()
-    run_preventions(preventions_list, G, retarded_autistic_variable)
+    run_preventions(preventions_list, G, retarded_autistic_variable, num_persons)
 
     # Now that user input is gathered and preventions are applied, initialize Pygame
     pygame.init()
@@ -126,8 +124,7 @@ if __name__ == "__main__":
 
             # Infect people
             for person1, person2 in G.edges:
-                logic.draw_edge_and_infect(person1, person2, (infection_radius, infection_probability,
-                                           recovery_time), screen)
+                logic.draw_edge_and_infect(person1, person2, (infection_radius, recovery_time), screen)
 
             # Track infection statistics
             num_infected = sum(1 for p in G if p.infected)

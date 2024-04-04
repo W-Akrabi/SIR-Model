@@ -24,7 +24,7 @@ import pygame
 import numpy as np
 import python_ta
 import graph_model
-
+import getting_data
 
 class Person:
     """
@@ -37,6 +37,7 @@ class Person:
     - speed_y: float, how fast the person moves in the y direction
     - infected: bool, if person is infected
     - recovered: bool, if the person recovered from infection
+    - infection_probability: float, the indvidual chance for a person to be infected
     - infected_timer: int, the amount of time the person is infected for
 
     Representation Invariants:
@@ -48,6 +49,7 @@ class Person:
     speed_y: float
     infected: bool
     recovered: bool
+    infection_probability: float
     infection_timer: int
 
     def __init__(self) -> None:
@@ -57,6 +59,7 @@ class Person:
         self.speed_y = np.random.uniform(-1.5, 1.5)
         self.infected = False
         self.recovered = False
+        self.infection_probability = getting_data.global_infect * 10
         self.infection_timer = 0
 
     def move(self, width, height) -> None:
@@ -123,14 +126,14 @@ def calculate_distance(p1: Person, p2: Person) -> float:
     return np.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2)
 
 
-def draw_edge_and_infect(vertex1: Person, vertex2: Person, model_params: tuple[int, float, int],
+def draw_edge_and_infect(vertex1: Person, vertex2: Person, model_params: tuple[int, int],
                          screen: pygame.display.set_mode()) -> None:
     """
     draws the edge between two people under a certain distance
     :param vertex1:
     :param vertex2:
     """
-    threshold, infection_probability, recovery_time = model_params
+    threshold, recovery_time = model_params
     distance = calculate_distance(vertex1, vertex2)
     if distance < threshold:  # Adjust the threshold distance as needed
         pygame.draw.line(screen, (255, 255, 255), (int(vertex1.x), int(vertex1.y)),
@@ -138,10 +141,10 @@ def draw_edge_and_infect(vertex1: Person, vertex2: Person, model_params: tuple[i
         # Check if one is infected and the other is not, then infect based on the infection probability
         infect = np.random.rand()
         if vertex1.infected and not vertex2.infected:
-            if infect < infection_probability:
+            if infect < vertex1.infection_probability:
                 vertex2.infected = True
         elif vertex2.infected and not vertex1.infected:
-            if infect < infection_probability:
+            if infect < vertex2.infection_probability:
                 vertex1.infected = True
 
         if vertex1.infected:

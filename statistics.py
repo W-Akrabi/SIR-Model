@@ -1,8 +1,12 @@
+"""
+Module for analyzing and visualizing SIR model simulations.
+"""
 import numpy as np
 import plotly.graph_objects as go
+import python_ta
 
 
-def plot_infection_curve(infected_counts):
+def plot_infection_curve(infected_counts: list) -> None:
     """
     Plot the infection curve showing the number of infected individuals over time.
     Args:
@@ -26,7 +30,7 @@ def plot_infection_curve(infected_counts):
     fig.show()
 
 
-def calculate_infection_rate(infected_counts):
+def calculate_infection_rate(infected_counts: list) -> float:
     """
     Calculate the average infection rate over the simulation.
     Args:
@@ -38,7 +42,7 @@ def calculate_infection_rate(infected_counts):
     return infection_rate
 
 
-def analyze_sir_simulation(infected_counts, recovered_counts, population):
+def analyze_sir_simulation(infected_counts: list, recovered_counts: list, population: int) -> None:
     """
     Analyze various statistics from a SIR model simulation
     Args:
@@ -73,19 +77,19 @@ def analyze_sir_simulation(infected_counts, recovered_counts, population):
                              y=infected_counts,
                              mode='lines',
                              name='Infected',
-                             line=dict(color='red')))
+                             line={"color": 'red'}))
     fig.add_trace(go.Scatter(x=list(range(len(recovered_counts))),
                              y=recovered_counts,
                              mode='lines',
                              name='Recovered',
-                             line=dict(color='green')))
+                             line={"color": 'green'}))
     fig.update_layout(title='SIR Model Simulation',
                       xaxis_title='Time',
                       yaxis_title='Number of Individuals')
     fig.show()
 
 
-def plot_sir_curve(infected_counts, recovered_counts, susceptible_counts=None):
+def plot_sir_curve(infected_counts: list, recovered_counts: list, susceptible_counts=None) -> None:
     """
     Plot the SIR curve showing susceptible, infected, and recovered individuals over time.
     Args:
@@ -98,24 +102,24 @@ def plot_sir_curve(infected_counts, recovered_counts, susceptible_counts=None):
                              y=infected_counts,
                              mode='lines',
                              name='Infected',
-                             line=dict(color='red')))
+                             line={"color": 'red'}))
     fig.add_trace(go.Scatter(x=list(range(len(recovered_counts))),
                              y=recovered_counts,
                              mode='lines',
                              name='Recovered',
-                             line=dict(color='green')))
+                             line={"color": 'green'}))
     fig.add_trace(go.Scatter(x=list(range(len(susceptible_counts))),
                              y=susceptible_counts,
                              mode='lines',
                              name='Susceptible',
-                             line=dict(color='blue')))
+                             line={"color": 'blue'}))
     fig.update_layout(title='SIR Model Simulation',
                       xaxis_title='Time',
                       yaxis_title='Number of Individuals')
     fig.show()
 
 
-def plot_infection_curve_with_fft(infected_counts, sampling_rate=300):
+def plot_infection_curve_with_fft(infected_counts: list, sampling_rate=300) -> None:
     """
     Plot the infection curve and its FFT spectrum.
     Args:
@@ -149,7 +153,8 @@ def plot_infection_curve_with_fft(infected_counts, sampling_rate=300):
     fig_fft.show()
 
 
-def analyze_sir_simulation_with_fft(infected_counts, recovered_counts, population, sampling_rate=300):
+def analyze_sir_simulation_with_fft(infected_counts: list, recovered_counts: list,
+                                    population: int, sampling_rate=300) -> None:
     """
     Analyze various statistics from a SIR model simulation including FFT analysis.
     Args:
@@ -205,3 +210,11 @@ def analyze_sir_simulation_with_fft(infected_counts, recovered_counts, populatio
         print(f"Frequency: {freq} Hz, Amplitude: {amp}")
 
     # Continue with other analyses as needed
+
+
+if __name__ == "__main__":
+    python_ta.check_all(config={
+        'extra-imports': [],  # the names (strs) of imported modules
+        'allowed-io': [],  # the names (strs) of functions that call print/open/input
+        'max-line-length': 120
+    })

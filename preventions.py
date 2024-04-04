@@ -5,16 +5,27 @@ import python_ta
 import graph_model
 
 
-def vaccine_prevention(people: graph_model.Graph(), vaccine_effectiveness: float) -> None:
+def vaccine_prevention(people: graph_model.Graph(), people_with_vaccines: float) -> None:
     """
     Apply vaccine prevention by reducing the infection probability for vaccinated individuals.
     :param people: List of Person objects.
-    :param vaccine_effectiveness: Effectiveness of the vaccine (0 to 1).
+    :param people_with_vaccines: Effectiveness of the vaccine (0 to 1).
     """
-    # THIS HAS TO BE FIXED
-    for person in people:
+    # Calculate the number of vaccinated people
+    num_vaccinated = int(people_with_vaccines * len(people))
+
+    # Shuffle the keys of the dictionary
+    keys = list(people.nodes.keys())
+    random.shuffle(keys)
+
+    # Select the first num_vaccinated keys
+    vaccinated_people = keys[:num_vaccinated]
+
+    # Update infection probability for vaccinated individuals
+    for person_key in vaccinated_people:
+        person = people.nodes[person_key]
         # Reduce the person's infection probability based on vaccine effectiveness
-        person.infection_probability *= (1 - vaccine_effectiveness)
+        person.infection_probability *= 0.3  # Assuming 30% reduction in infection probability
 
 
 def lockdown(people: graph_model.Graph(), lockdown_factor: float) -> None:
@@ -51,15 +62,27 @@ def social_distance(people: graph_model.Graph(), distance_threshold: float, s_wi
                 person2.y += move_y
 
 
-def mask_wearing(people: graph_model.Graph(), mask_effectiveness: float) -> None:
+def mask_wearing(people: graph_model.Graph(), people_with_masks: float) -> None:
     """
     Implement mask wearing by reducing the infection probability for individuals wearing masks.
     :param people: List of Person objects.
-    :param mask_effectiveness: Effectiveness of masks (0 to 1).
+    :param people_with_masks: Effectiveness of masks (0 to 1).
     """
-    for person in people:
-        if person.infected and np.random.rand() > mask_effectiveness:
-            person.infected = False  # Reduce infection probability based on mask effectiveness
+    # Calculate the number of vaccinated people
+    num_vaccinated = int(people_with_masks * len(people))
+
+    # Shuffle the keys of the dictionary
+    keys = list(people.nodes.keys())
+    random.shuffle(keys)
+
+    # Select the first num_vaccinated keys
+    vaccinated_people = keys[:num_vaccinated]
+
+    # Update infection probability for vaccinated individuals
+    for person_key in vaccinated_people:
+        person = people.nodes[person_key]
+        # Reduce the person's infection probability based on vaccine effectiveness
+        person.infection_probability *= 0.4  # Assuming 40% reduction in infection probability from canada.gov
 
 
 def infection_tracing(people: graph_model.Graph(), infected_threshold: float) -> None:
