@@ -1,5 +1,16 @@
 """
 Module for analyzing and visualizing SIR model simulations.
+
+This module contains functions for plotting infection curves, calculating infection rates,
+analyzing SIR model simulations, and visualizing simulation results using Plotly.
+
+Functions:
+    plot_infection_curve: Plot the infection curve showing the number of infected individuals over time.
+    calculate_infection_rate: Calculate the average infection rate over the simulation.
+    analyze_sir_simulation: Analyze various statistics from a SIR model simulation.
+    plot_sir_curve: Plot the SIR curve showing susceptible, infected, and recovered individuals over time.
+    plot_infection_curve_with_fft: Plot the infection curve and its FFT spectrum.
+    analyze_sir_simulation_with_fft: Analyze various statistics from a SIR model simulation including FFT analysis.
 """
 import numpy as np
 import plotly.graph_objects as go

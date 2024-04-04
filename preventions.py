@@ -1,4 +1,18 @@
-"""Preventions"""
+"""
+Module for defining prevention measures for controlling disease spread.
+
+This module contains functions for implementing preventive measures such as vaccines, lockdowns, social distancing,
+mask wearing, infection tracing, staggered work hours, and remote work.
+
+Functions:
+    vaccine_prevention: Apply vaccine prevention by reducing the infection probability for vaccinated individuals.
+    lockdown: Apply lockdown by reducing the movement speed of individuals.
+    social_distance: Implement social distancing by increasing the distance between individuals.
+    mask_wearing: Implement mask wearing by reducing the infection probability for individuals wearing masks.
+    infection_tracing: Implement infection tracing to identify and isolate individuals who have been in contact with infected individuals.
+    staggered_work_hours: Implement staggered work hours to reduce the number of people present in a shared space at any given time.
+    remote_work: Encourage remote work to minimize physical interactions in workplaces.
+"""
 import random
 
 import numpy as np
@@ -90,11 +104,6 @@ def infection_tracing(people: graph_model.Graph(), infected_threshold: float) ->
     :param people: List of Person objects.
     :param infected_threshold: Threshold for identifying infected individuals (0 to 1).
     """
-
-    #
-    # REDUCE THE NESTED EXPRESSIONS YOU CAN ONLY HAVE 3 NESTS MAX
-    #
-
     for person in people:
         if person.infected and random.random() < infected_threshold:
             # Transport infected person to the bottom corner of the map

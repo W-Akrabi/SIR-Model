@@ -1,4 +1,12 @@
-"""Getting and performing calculations on data"""
+"""
+Module for getting and performing calculations on data.
+This module provides functions to read data from a CSV file and calculate global infection rate, mortality rate, and recovery rate
+from the data. It also includes functionality to calculate infection rate, mortality rate, and recovery rate for each country
+present in the dataset.
+
+Functions:
+    calculate_global_rates: Calculate global infection rate, mortality rate, and recovery rate from the provided CSV file.
+"""
 import pandas as pd
 
 

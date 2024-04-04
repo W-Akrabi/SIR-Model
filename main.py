@@ -1,4 +1,19 @@
-"""main"""
+"""Main module for running a simulation of disease spread with user-defined preventions.
+
+This module contains functions for gathering user input, running preventions on a graph model,
+and visualizing the simulation using Pygame. Basically the main loop for our program.
+
+Functions:
+    get_user_input: Prompt the user to input the number of people and infection radius for the simulation.
+    get_preventions: Prompt the user to select up to three preventions and their severity levels.
+    get_prevention_severity: Get the severity level for a specific prevention.
+    get_user_prevention_level: Prompt the user to input the severity level for a prevention.
+    run_preventions: Apply the selected preventions to the graph model.
+    main: Run the simulation and display statistics and visualizations.
+
+Constants:
+    recovery_time: Default time for recovery from infection.
+"""
 from typing import Union
 
 import statistics
